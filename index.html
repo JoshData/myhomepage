@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width">
 
-        <title>--Page Title---</title>
+        <title>Joshua Tauberer&rsquo;s Homepage</title>
 
         <!--
         Optional metadata, in order of most to least important:
@@ -31,12 +31,6 @@
 
 
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="static/css/main.css">
 
@@ -46,82 +40,74 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
+
+        <div id="bluebar">
+            <script>
+            var email_addr = "tj".split("").reverse().join("")
+                + String.fromCharCode(2*0x20)
+                + "smacco".split("").reverse().join("")
+                + "."
+                + "ofni".split("").reverse().join("");
+            document.write("\x3ca href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
+            </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
+            | <a href="http://twitter.com/joshdata">@JoshData</a>
+            | <a href="cv.html  ">cv</a> | <a href="blog">blog</a> | <a href="https://github.com/joshdata/">github</a>
+            | <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+
+        <div id="bigphoto">
+
+          <div class="container-fluid">
+              <div class="col-sm-offset-5 col-sm-7 col-md-offset-6 col-md-6">
+                <div id="myname" class="shaded_light">
+                  <img src="static/img/me_2011-07-03.jpeg"/>
+                  <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
+                  <p class="deck">A civic hacker<sup>*</sup> in Washington, DC, USA.</p>
+                </div>
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+          </div>
+
+        </div>
+
+        <div class="greybar">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-sm-7 col-md-4">
+                <p>In 2004 I launched <a href="http://www.govtrack.us">GovTrack.us</a>, a government transparency tool for the U.S. Congress, and I have been tracking Congress ever since.</p>
+                
+                <p>My part-time/consulting work currently includes <a href="http://www.larsa4d.com">LARSA, Inc.</a> (a structural engineering software company) and the <a href="http://dccouncil.us/offices/office-of-the-general-counsel">D.C. Council Office of the General Counsel</a>.</p>
+              </div>
+              <div class="col-sm-5 col-md-2">
+                <a href="http://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us" style="border: 1px solid #666"/></a>
+              </div>
+
+              <div class="col-sm-3 col-md-4 col-md-offset-1">
+                <p>My book <a href="http://opengovdata.io/">Open Government Data: The Book (2012)</a> discusses the principles behind the open government data movement in the United States, including uses for transparency and civic engagement, a brief legal history, data quality, civic hacking, and paradoxes in transparency.</p>
+              </div>
+              <div class="col-sm-2 col-md-1">
+                <a href="http://opengovdata.io/"><img src="static/img/ogdbook.jpeg" title="Open Government Data: The Book" class="img-responsive" style="border: 1px solid #666"/></a>
+              </div>
+
+              <div class="clearfix visible-md"></div>
+              <div class="clearfix visible-lg"></div>
+
+              <div class="col-sm-4 col-md-4">
+                <p>I also co-organize <a href="http://dc.opendataday.org">Open Data Day DC</a> each year, support other hackathons, and am a member of Code for DC.</p>
+                <p><sup>*</sup><a href="http://razor.occams.info/blog/2013/ 01/18/would-the-real-hacktivist-please-stand-up/">Civic hacking</a> is creative use of technology to innovate our civic lives, especially our participation in government.</p>
+              </div>
+              <div class="col-sm-3 col-md-2">
+                <img src="static/img/opendataday-louie.jpeg" title="Open Data Day DC 2014, photo by Marcus Louie" class="img-responsive" style="border: 1px solid #555; margin: auto;"/>
+                <div style="margin-top: 5px; font-size: 80%; line-height: 110%; text-align: center;">Open Data Day DC 2014, photo by Marcus Louie</div>
+              </div>
+
+              <div class="col-sm-12 col-md-offset-1 col-md-5">
+                <p>I once long ago wanted to be a FBI profiler, and now I dream of being a chef, or the newspaper editor in Spiderman.</p>
+              </div>
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </div>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-      </div>
-    </div>
-
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+          </div>
         </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="col-lg-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
-        </div>
-      </div>
-
-      <hr>
-
-      <footer>
-        <p>&copy; Company 2013</p>
-      </footer>
-    </div> <!-- /container -->
+    
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="assets/jquery-1.10.1.min.js"><\/script>')</script>
 

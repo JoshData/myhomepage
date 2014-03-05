@@ -1,22 +1,133 @@
+@import url(http://fonts.googleapis.com/css?family=Tienne:700);
+@import url(http://fonts.googleapis.com/css?family=Duru+Sans);
 
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Duru Sans', sans-serif;
+	font-size: 16px;
+}
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+.shaded_light {
+	background: rgba(0, 0, 0, 0.2);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000033,endColorstr=#00000033);
+}
 
+a, a:hover {
+	color: #15418a;
+}
 
+#bluebar {
+	padding: 10px;
+	background-color: #15418a;
+	text-align: right;
+	color: #AAF;
+	font-size: 80%;
+}
+	#bluebar a {
+		padding: 7px;
+		color: #AAF;
+	}
 
+#bigphoto {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-color: #b3bfcd;
+	background-repeat: no-repeat;
+	background-position: top center; 
+	background-image: url(../img/capitol_1920x1098.jpeg);
+	min-height: 1098px;
+	padding-top: 120px;
+}
 
+#myname {
+	padding: 20px 0 20px 20px;
+	color: white;
+	font-size: 3vw;
+}
+	#myname img {
+		float: left;
+		height: 2.25em;
+		border: 2px solid #36A;
+		margin: -.2em 20px 0 0;
+	}
+	#myname h1 {
+		margin: 0;
+		font-family: 'Tienne', serif;
+		line-height: 100%;
+		font-size: 100%;
+	}
+		#myname h1 small {
+			color: #AAD;
+			font-size: 50%;
+		}
+	#myname p.deck {
+		font-size: 52%;
+		color: #CCE;
+		margin-top: .5em;
+		margin-bottom: 0;
+	}
 
+@media (max-width: 1199px) {
+	#bigphoto {
+	  background-image: url(../img/capitol_1200x686.jpeg);
+	  min-height: 686px;
+	  padding-top: 75px; 
+	}
+	#myname { font-size: 3.5vw; }
+}
+@media (max-width: 991px) {
+	#bigphoto {
+	  background-image: url(../img/capitol_1200x686.jpeg);
+	  min-height: 686px;
+	  padding-top: 75px; 
+	}
+	#myname { font-size: 4vw; }
+}
 
+@media (max-width: 767px) {
+	#bigphoto {
+	  background-image: url(../img/capitol_768x439.jpeg);
+	  min-height: 439px;
+	  padding-top: 50px; 
+	}
+	#myname {
+		font-size: 5vw;
+		background: rgba(0, 0, 0, 0.5);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000088,endColorstr=#00000088);
+	}
+	#myname p.deck {
+		color: white;
+	}
+}
 
+#about-me {
+	background-color: #b3bfcd;
+	padding: 50px;
+	color: black;
+}
+	.about-me {
+		margin-top: 110px;
+		background: rgba(0, 0, 0, 0.5);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000022,endColorstr=#00000022);
+	}
+	.about-me p {
+		margin: 0;
+	}
+	.about-me a {
+		color: #F99;
+		font-weight: bold;
+	}
 
-
-
-
-
-
-
-
-
-
+.greybar {
+	background-color: #b3bfcd;
+	padding: 0 3vw 3vw 3vw;
+}
+.greybar a {
+	font-weight: bold;
+}
+.greybar > .container-fluid > .row > div {
+	padding-bottom: 3em;
+}
