@@ -4,8 +4,10 @@
 body {
 	padding: 0;
 	margin: 0;
+	background-color: black;
 	font-family: 'Duru Sans', sans-serif;
 	font-size: 16px;
+	color: #FEFEFE;
 }
 
 .shaded_light {
@@ -14,45 +16,48 @@ body {
 }
 
 a, a:hover {
-	color: #15418a;
+	color: #FBB;
 }
 
-#bluebar {
+header, footer {
 	padding: 10px;
-	background-color: #15418a;
-	text-align: right;
-	color: #AAF;
-	font-size: 80%;
+	background-color: rgba(0, 0, 0, 0.2);
+	color: #CCF;
+	font-size: 83%;
 }
-	#bluebar a {
-		padding: 7px;
-		color: #AAF;
+	header a {
+		color: #CCF;
 	}
+	header {
+		text-align: right;
+	}
+	header a {
+		padding: 7px;
+	}
+
 
 #bigphoto {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: cover;
-	background-color: #b3bfcd;
+	background-size: 65%;
+	background-color: black;
 	background-repeat: no-repeat;
-	background-position: top center; 
-	background-image: url(../img/capitol_1920x1098.jpeg);
-	min-height: 1098px;
-	padding-top: 120px;
+	background-position: top left; 
+	background-image: url(../img/me_1920x2029.jpeg);
+	padding-right: 20px;
+}
+
+#content-wrapper {
+	margin-left: 55%;
 }
 
 #myname {
-	padding: 20px 0 20px 20px;
+	margin-top: 110px;
+	margin-bottom: 110px;
 	color: white;
-	font-size: 3vw;
+	font-size: 3.75vw;
 }
-	#myname img {
-		float: left;
-		height: 2.25em;
-		border: 2px solid #36A;
-		margin: -.2em 20px 0 0;
-	}
 	#myname h1 {
 		margin: 0;
 		font-family: 'Tienne', serif;
@@ -60,43 +65,44 @@ a, a:hover {
 		font-size: 100%;
 	}
 		#myname h1 small {
-			color: #AAD;
+			color: #DDF;
 			font-size: 50%;
 		}
 	#myname p.deck {
 		font-size: 52%;
-		color: #CCE;
+		color: #DDF;
 		margin-top: .5em;
 		margin-bottom: 0;
 	}
 
 @media (max-width: 1199px) {
 	#bigphoto {
-	  background-image: url(../img/capitol_1200x686.jpeg);
-	  min-height: 686px;
-	  padding-top: 75px; 
+	  background-image: url(../img/me_1200x1268.jpeg);
+	  background-size: 80%;
 	}
 	#myname { font-size: 3.5vw; }
 }
 @media (max-width: 991px) {
 	#bigphoto {
-	  background-image: url(../img/capitol_1200x686.jpeg);
-	  min-height: 686px;
-	  padding-top: 75px; 
+	  background-image: url(../img/me_1200x1268.jpeg);
+	  background-size: 85%;
+	}
+	#content-wrapper {
+		margin: 325px 10% 0 10%;
 	}
 	#myname { font-size: 4vw; }
 }
 
 @media (max-width: 767px) {
 	#bigphoto {
-	  background-image: url(../img/capitol_768x439.jpeg);
-	  min-height: 439px;
-	  padding-top: 50px; 
+	  background-image: url(../img/me_768x811.jpeg);
+	  background-size: 100%;
+	}
+	#content-wrapper {
+		margin: 175px 10% 0 10%;
 	}
 	#myname {
 		font-size: 5vw;
-		background: rgba(0, 0, 0, 0.5);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000088,endColorstr=#00000088);
 	}
 	#myname p.deck {
 		color: white;
@@ -104,30 +110,27 @@ a, a:hover {
 }
 
 #about-me {
-	background-color: #b3bfcd;
-	padding: 50px;
-	color: black;
 }
-	.about-me {
-		margin-top: 110px;
-		background: rgba(0, 0, 0, 0.5);
-		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000022,endColorstr=#00000022);
-	}
-	.about-me p {
-		margin: 0;
-	}
-	.about-me a {
-		color: #F99;
+	#about-me a {
 		font-weight: bold;
+		text-decoration: underline;
+	}
+	#about-me > div {
+		margin-bottom: 3em;
+	}
+	#about-me img {
+		margin-bottom: 1.5em;
 	}
 
-.greybar {
-	background-color: #b3bfcd;
-	padding: 0 3vw 3vw 3vw;
+p.quote {
+	margin: 3em auto;
+	max-width: 640px;
+	padding: 1em;
+	border-top: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+	font-size: 90%;
 }
-.greybar a {
-	font-weight: bold;
-}
-.greybar > .container-fluid > .row > div {
-	padding-bottom: 3em;
+
+#photos img {
+	margin-bottom: 23px;
 }

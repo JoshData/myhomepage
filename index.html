@@ -9,26 +9,8 @@
         <meta name="viewport" content="width=device-width">
 
         <title>Joshua Tauberer&rsquo;s Homepage</title>
-
-        <!--
-        Optional metadata, in order of most to least important:
-
-        <meta name="og:title" content="End Secret Laws.us" />
-
-        <meta name="description" content="">
-        <meta name="og:description" content="">
-
-        <meta property="og:image" content="http://endsecretlaws.us/media/fbi_file_1_modified.png" />
-
-        <meta name="twitter:card" content="summary_large_image" /> ..."summary" is also good ...
-
-        <meta name="twitter:creator" content="@yourhandle" />
-        <meta name="twitter:creator:id" content="######" /> ... corresponding numeric ID ...
-        <meta name="twitter:site" content="@yourhandle" />
-        <meta name="twitter:site:id" content="######" /> ... corresponding numeric ID ...
-
-        -->
-
+        <meta name="description" content="Joshua Tauberer is a civic hacker in Washington, DC, USA.">
+        <meta property="og:image" content="http://razor.occams.info/static/img/me_mug.jpeg" />
 
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-theme.min.css">
@@ -41,71 +23,86 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div id="bluebar">
-            <script>
-            var email_addr = "tj".split("").reverse().join("")
-                + String.fromCharCode(2*0x20)
-                + "smacco".split("").reverse().join("")
-                + "."
-                + "ofni".split("").reverse().join("");
-            document.write("\x3ca href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
-            </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
-            | <a href="http://twitter.com/joshdata">@JoshData</a>
-            | <a href="cv.html  ">cv</a> | <a href="blog">blog</a> | <a href="https://github.com/joshdata/">github</a>
-            | <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
-        </div>
-
         <div id="bigphoto">
+          <header>
+              <script>
+              var email_addr = "tj".split("").reverse().join("")
+                  + String.fromCharCode(2*0x20)
+                  + "smacco".split("").reverse().join("")
+                  + "."
+                  + "ofni".split("").reverse().join("");
+              document.write("\x3ca href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
+              </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
+              | <a href="http://twitter.com/joshdata">@JoshData</a>
+              | <a href="cv.html  ">cv</a> | <a href="blog">blog</a> | <a href="https://github.com/joshdata/">github</a>
+              | <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
+          </header>
 
-          <div class="container-fluid">
-              <div class="col-sm-offset-5 col-sm-7 col-md-offset-6 col-md-6">
-                <div id="myname" class="shaded_light">
-                  <img src="static/img/me_2011-07-03.jpeg"/>
-                  <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
-                  <p class="deck">A civic hacker<sup>*</sup> in Washington, DC, USA.</p>
-                </div>
-            </div>
+          <div id="content-wrapper">
+
+          <div id="myname">
+            <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
+            <p class="deck">A civic hacker<sup>*</sup> in Washington, DC, USA.</p>
           </div>
 
-        </div>
-
-        <div class="greybar">
-          <div class="container-fluid">
+          <div id="about-me" class="container-fluid">
 
             <div class="row">
-              <div class="col-sm-7 col-md-4">
+              <div class="col-lg-5">
+                <a href="http://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us" style="border: 1px solid #666"/></a>
+              </div>
+              <div class="col-lg-7">
                 <p>In 2004 I launched <a href="http://www.govtrack.us">GovTrack.us</a>, a government transparency tool for the U.S. Congress, and I have been tracking Congress ever since.</p>
                 
                 <p>My part-time/consulting work currently includes <a href="http://www.larsa4d.com">LARSA, Inc.</a> (a structural engineering software company) and the <a href="http://dccouncil.us/offices/office-of-the-general-counsel">D.C. Council Office of the General Counsel</a>.</p>
               </div>
-              <div class="col-sm-5 col-md-2">
-                <a href="http://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us" style="border: 1px solid #666"/></a>
-              </div>
+            </div>
 
-              <div class="col-sm-3 col-md-4 col-md-offset-1">
-                <p>My book <a href="http://opengovdata.io/">Open Government Data: The Book (2012)</a> discusses the principles behind the open government data movement in the United States, including uses for transparency and civic engagement, a brief legal history, data quality, civic hacking, and paradoxes in transparency.</p>
-              </div>
-              <div class="col-sm-2 col-md-1">
+            <div class="row">
+              <div class="col-sm-4">
                 <a href="http://opengovdata.io/"><img src="static/img/ogdbook.jpeg" title="Open Government Data: The Book" class="img-responsive" style="border: 1px solid #666"/></a>
               </div>
-
-              <div class="clearfix visible-md"></div>
-              <div class="clearfix visible-lg"></div>
-
-              <div class="col-sm-4 col-md-4">
+              <div class="col-sm-8">
+                <p>My book <a href="http://opengovdata.io/">Open Government Data: The Book (2012)</a> discusses the principles behind the open government data movement in the United States, including uses for transparency and civic engagement, a brief legal history, data quality, civic hacking, and paradoxes in transparency.</p>
                 <p>I also co-organize <a href="http://dc.opendataday.org">Open Data Day DC</a> each year, support other hackathons, and am a member of Code for DC.</p>
                 <p><sup>*</sup><a href="http://razor.occams.info/blog/2013/ 01/18/would-the-real-hacktivist-please-stand-up/">Civic hacking</a> is creative use of technology to innovate our civic lives, especially our participation in government.</p>
               </div>
-              <div class="col-sm-3 col-md-2">
-                <img src="static/img/opendataday-louie.jpeg" title="Open Data Day DC 2014, photo by Marcus Louie" class="img-responsive" style="border: 1px solid #555; margin: auto;"/>
-                <div style="margin-top: 5px; font-size: 80%; line-height: 110%; text-align: center;">Open Data Day DC 2014, photo by Marcus Louie</div>
-              </div>
+            </div>
 
-              <div class="col-sm-12 col-md-offset-1 col-md-5">
+            <div>
+              <img src="static/img/opendataday-louie.jpeg" title="Open Data Day DC 2014, photo by Marcus Louie" class="img-responsive" style="border: 1px solid #555; margin: auto;"/>
+              <div style="margin-top: 8px; font-size: 80%; line-height: 110%; text-align: center;">Open Data Day DC 2014, photo by Marcus Louie</div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
                 <p>I once long ago wanted to be a FBI profiler, and now I dream of being a chef, or the newspaper editor in Spiderman.</p>
               </div>
             </div>
           </div>
+          </div>
+
+          <div style="padding: 0 4em 0 4em">
+            <p class="quote">&ldquo;If you already know what recursion is, just remember the answer. Otherwise, find someone who is standing closer to Douglas Hofstadter than you are; then ask him or her what recursion is.&rdquo; -- Andrew Plotkin</p>
+
+            <div id="photos" class="container">
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="static/photos/full/IMG_1671.JPG"><img src="static/photos/thumb/IMG_1671.JPG" class="img-responsive" title="Columbia Heights Rainy Dawn"></a>
+                  <a href="static/photos/full/img_0375.jpg"><img src="static/photos/thumb/img_0375.jpg" class="img-responsive" title="Older Phildalphia Transit Map Revealed"></a>
+                </div>
+                <div class="col-md-5">
+                  <a href="static/photos/full/IMAG0165.jpg"><img src="static/photos/thumb/IMAG0165.jpg" class="img-responsive"title="Capitol Reflection"></a>
+                  <a href="static/photos/full/img_0413.jpg"><img src="static/photos/thumb/img_0413.jpg" class="img-responsive" title="The Center of Philadelphia"></a>
+                  <a href="static/photos/full/IMG_1120.JPG"><img src="static/photos/thumb/IMG_1120.JPG" class="img-responsive" title="Rock Creek Park, DC"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            <p>Photo of me is by <a href="http://www.jimgrahamphotography.com/">Jim Graham</a> for the <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">Penn Gazette</a>, August 2013.</p>
+          </footer>
         </div>
     
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
