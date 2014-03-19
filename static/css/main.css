@@ -50,6 +50,7 @@ header, footer {
 
 #content-wrapper {
 	margin-left: 55%;
+	min-height: 800px;
 }
 
 #myname {
@@ -131,6 +132,11 @@ p.quote {
 	font-size: 90%;
 }
 
+#photos {
+	margin-top: 4em;
+	border-top: 1px solid #333;
+	padding-top: 2em;
+}
 #photos img {
 	margin-bottom: 23px;
 }
