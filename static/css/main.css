@@ -54,8 +54,8 @@ header, footer {
 }
 
 #myname {
-	margin-top: 110px;
-	margin-bottom: 110px;
+	padding-top: 110px;
+	padding-bottom: 50px;
 	color: white;
 	font-size: 3.75vw;
 }
@@ -75,6 +75,16 @@ header, footer {
 		margin-top: .5em;
 		margin-bottom: 0;
 	}
+	#myname .links {
+		margin-top: 3px;
+		font-size: 30%;
+	}
+		#myname .links a {
+			margin: 0 .5em;
+		}
+			#myname .links a.first {
+				margin-left: 0;
+			}
 
 @media (max-width: 1199px) {
 	#bigphoto {
@@ -88,9 +98,6 @@ header, footer {
 	  background-image: url(../img/me_1200x1268.jpeg);
 	  background-size: 85%;
 	}
-	#content-wrapper {
-		margin: 325px 10% 0 10%;
-	}
 	#myname { font-size: 4vw; }
 }
 
@@ -100,13 +107,18 @@ header, footer {
 	  background-size: 100%;
 	}
 	#content-wrapper {
-		margin: 175px 10% 0 10%;
+		margin: 0 10% 0 10%;
+		padding-top: 275px;
 	}
 	#myname {
 		font-size: 5vw;
 	}
 	#myname p.deck {
 		color: white;
+		font-size: 13px;
+	}
+	#myname .links {
+		font-size: 11px;
 	}
 }
 
@@ -116,11 +128,8 @@ header, footer {
 		font-weight: bold;
 		text-decoration: underline;
 	}
-	#about-me > div {
-		margin-bottom: 3em;
-	}
 	#about-me img {
-		margin-bottom: 1.5em;
+		margin-bottom: .5em;
 	}
 
 p.quote {
