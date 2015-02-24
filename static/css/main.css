@@ -25,7 +25,7 @@ a, a:hover {
 
 #content-wrapper {
 	background-color: rgba(205,200,180,.85);
-	padding: 20px;
+	padding: 0 15px 25px 15px;
 	max-width: 40%;
 	font-family: sans-serif;
 	font-size: 16px;
