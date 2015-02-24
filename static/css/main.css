@@ -1,63 +1,43 @@
 @import url(http://fonts.googleapis.com/css?family=Tienne:700);
-@import url(http://fonts.googleapis.com/css?family=Duru+Sans);
 
 body {
 	padding: 0;
 	margin: 0;
 	background-color: black;
-	font-family: 'Duru Sans', sans-serif;
-	font-size: 16px;
-	color: #FEFEFE;
-}
-
-.shaded_light {
-	background: rgba(0, 0, 0, 0.2);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000033,endColorstr=#00000033);
 }
 
 a, a:hover {
-	color: #FBB;
+	color: #251;
 }
-
-header, footer {
-	padding: 10px;
-	background-color: rgba(0, 0, 0, 0.2);
-	color: #CCF;
-	font-size: 83%;
-}
-	header a {
-		color: #CCF;
-	}
-	header {
-		text-align: right;
-	}
-	header a {
-		padding: 7px;
-	}
-
 
 #bigphoto {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
-	background-size: 65%;
-	background-color: black;
+	background-size: 100%;
 	background-repeat: no-repeat;
 	background-position: top left; 
-	background-image: url(../img/me_1920x2029.jpeg);
-	padding-right: 20px;
+	background-color: black;
+	background-image: url(../img/me_1920.jpeg);
+	padding: 15px;
+	min-height: 65vw
 }
 
 #content-wrapper {
-	margin-left: 55%;
-	min-height: 800px;
+	background-color: rgba(205,200,180,.85);
+	padding: 20px;
+	max-width: 40%;
+	font-family: sans-serif;
+	font-size: 16px;
+	color: black;
+	font-weight: bold;
 }
 
 #myname {
-	padding-top: 110px;
-	padding-bottom: 50px;
-	color: white;
-	font-size: 3.75vw;
+	padding-top: 50px;
+	padding-bottom: 10px;
+	font-size: 3.2vw;
+	color: black;
 }
 	#myname h1 {
 		margin: 0;
@@ -66,18 +46,16 @@ header, footer {
 		font-size: 100%;
 	}
 		#myname h1 small {
-			color: #DDF;
 			font-size: 50%;
+			color: black;
 		}
 	#myname p.deck {
-		font-size: 52%;
-		color: #DDF;
-		margin-top: .5em;
-		margin-bottom: 0;
+		font-size: 14px;
+		margin: .5em 0;
 	}
 	#myname .links {
 		margin-top: 3px;
-		font-size: 30%;
+		font-size: 14px;
 	}
 		#myname .links a {
 			margin: 0 .5em;
@@ -88,37 +66,23 @@ header, footer {
 
 @media (max-width: 1199px) {
 	#bigphoto {
-	  background-image: url(../img/me_1200x1268.jpeg);
-	  background-size: 80%;
-	}
-	#myname { font-size: 3.5vw; }
-}
-@media (max-width: 991px) {
-	#bigphoto {
-	  background-image: url(../img/me_1200x1268.jpeg);
-	  background-size: 85%;
-	}
-	#myname { font-size: 4vw; }
-}
-
-@media (max-width: 767px) {
-	#bigphoto {
-	  background-image: url(../img/me_768x811.jpeg);
-	  background-size: 100%;
+	  background-image: url(../img/me_1200.jpeg);
 	}
 	#content-wrapper {
-		margin: 0 10% 0 10%;
-		padding-top: 275px;
+		font-size: 14px;
+		font-weight: normal;
+	}
+}
+@media (max-width: 767px) {
+	#bigphoto {
+	  background-image: url(../img/me_768.jpeg);
+	}
+	#content-wrapper {
+		margin-top: 100vw;
+		max-width: 100%;
 	}
 	#myname {
 		font-size: 5vw;
-	}
-	#myname p.deck {
-		color: white;
-		font-size: 13px;
-	}
-	#myname .links {
-		font-size: 11px;
 	}
 }
 
@@ -139,6 +103,7 @@ p.quote {
 	border-top: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
 	font-size: 90%;
+	color: white;
 }
 
 #photos {
@@ -148,4 +113,8 @@ p.quote {
 }
 #photos img {
 	margin-bottom: 23px;
+}
+
+h3 {
+	margin: 1.5em 0 1em 0;
 }
