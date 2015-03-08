@@ -1,5 +1,0 @@
-mkdir -p thumb
-for fn in `ls full`; do
-	echo convert full/$fn -resize 680 -quality 60 thumb/$fn;
-done
-

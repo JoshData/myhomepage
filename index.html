@@ -86,41 +86,28 @@
       </div>
     </div>
 
-          <div>
-            <div id="photos" class="container-fluid">
-              <div class="row">
-                <div class="col-md-7">
-                  <a href="static/photos/full/IMG_1671.JPG"><img src="static/photos/thumb/IMG_1671.JPG" class="img-responsive" title="Columbia Heights Rainy Dawn"></a>
-				  <a href="static/photos/full/IMG_1379.JPG"><img src="static/photos/thumb/IMG_1379.JPG" class="img-responsive" title="Celestial Device at the British Museum"></a>
-                </div>
-                <div class="col-md-5">
-                  <a href="static/photos/full/DSC00092.JPG"><img src="static/photos/thumb/DSC00092.JPG" class="img-responsive" title="Shattered Glass"></a>
-                  <a href="static/photos/full/IMAG0165.jpg"><img src="static/photos/thumb/IMAG0165.jpg" class="img-responsive"title="Capitol Reflection"></a>
-                  <a href="static/photos/full/IMG_1120.JPG"><img src="static/photos/thumb/IMG_1120.JPG" class="img-responsive" title="Rock Creek Park, DC"></a>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">
-				  <a href="static/photos/full/IMG_0987.JPG"><img src="static/photos/full/IMG_0987.JPG" class="img-responsive" title="NASA's Discovery does a fly by over DC strapped to a Boeing"></a>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <a href="static/photos/full/img_0375.jpg"><img src="static/photos/thumb/img_0375.jpg" class="img-responsive" title="Older Phildalphia Transit Map Revealed"></a>
-				</div>
-                <div class="col-md-4">
-		          <a href="static/photos/full/img_0333.jpg"><img src="static/photos/thumb/img_0333.jpg" class="img-responsive" title="Philadelphia Snowpocalypse"></a>
-                </div>
-                <div class="col-md-4">
-                  <a href="static/photos/full/img_0413.jpg"><img src="static/photos/thumb/img_0413.jpg" class="img-responsive" title="The Center of Philadelphia"></a>
-                </div>
-            </div>
-          </div>
+	<div class="container-fluid">
+		<div id="photos" class="row">
+			<h2>the things I photograph</h2>
+		</div>
+	</div>
+           
 
           <p class="quote">&ldquo;If you already know what recursion is, just remember the answer. Otherwise, find someone who is standing closer to Douglas Hofstadter than you are; then ask him or her what recursion is.&rdquo; -- Andrew Plotkin</p>
     
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+	<script src='http://JoshDataPhotos.tumblr.com/api/read/json?number=8&type=photo'></script>
+	<script>
+		for (var i = 0; i < tumblr_api_read.posts.length; i++) {
+			var n = $('<div class="col-sm-4"><a><img class="img-responsive"/></a></div>');
+			n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'])
+			n.find('img').attr('title', $('<div/>').html(tumblr_api_read.posts[i]['photo-caption']).text())
+			n.find('a').attr('href', tumblr_api_read.posts[i]['url-with-slug'])
+			$('#photos').append(n);
+		}
+	</script>
 
     </body>
 </html>
