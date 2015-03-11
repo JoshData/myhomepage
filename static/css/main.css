@@ -30,13 +30,12 @@ a, a:hover {
 	font-family: sans-serif;
 	font-size: 16px;
 	color: black;
-	font-weight: bold;
 }
 
 #myname {
 	padding-top: 50px;
 	padding-bottom: 10px;
-	font-size: 3.2vw;
+	font-size: 3vw;
 	color: black;
 }
 	#myname h1 {
@@ -50,12 +49,12 @@ a, a:hover {
 			color: black;
 		}
 	#myname p.deck {
-		font-size: 14px;
+		font-size: 16px;
 		margin: .5em 0;
 	}
 	#myname .links {
 		margin-top: 3px;
-		font-size: 14px;
+		font-size: 16px;
 	}
 		#myname .links a {
 			margin: 0 .5em;
@@ -88,12 +87,21 @@ a, a:hover {
 
 #about-me {
 }
+	#about-me > div {
+		margin-bottom: 1em;
+	}
 	#about-me a {
 		font-weight: bold;
-		text-decoration: underline;
+		border-bottom: 1px solid rgba(10,80,10,.7);
+	}
+	#about-me .col-xs-2 {
+		padding-right: 4px;
 	}
 	#about-me img {
-		margin-bottom: .5em;
+		border: 1px solid #557;
+	}
+	#about-me p {
+		line-height: 128%;
 	}
 
 p.quote {
@@ -104,6 +112,11 @@ p.quote {
 	border-bottom: 1px solid #CCC;
 	font-size: 90%;
 	color: white;
+}
+
+#about-me h3 {
+	margin: 0 0 3px 0;
+	font-size: 16px;
 }
 
 #photos {
@@ -119,6 +132,7 @@ p.quote {
 	margin-bottom: 30px;
 }
 
-h3 {
+h2 {
 	margin: 1.5em 0 1em 0;
+	font-size: 14px;
 }
