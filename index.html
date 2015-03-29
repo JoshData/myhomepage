@@ -142,7 +142,7 @@
 	<script>
 		for (var i = 0; i < tumblr_api_read.posts.length; i++) {
 			var n = $('<div class="col-sm-4"><a><img class="img-responsive"/></a></div>');
-			n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'])
+			n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'].replace(/http:/, 'https:'))
 			n.find('img').attr('title', $('<div/>').html(tumblr_api_read.posts[i]['photo-caption']).text())
 			n.find('a').attr('href', tumblr_api_read.posts[i]['url-with-slug'])
 			$('#photos').append(n);
