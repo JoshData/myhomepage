@@ -56,10 +56,10 @@
 		<div class="container-fluid">
 			<h1>Hi, I&rsquo;m Rupert.</h1>
 			<h2>aka <a href="https://twitter.com/JoshDataTurtle">@JoshDataTurtle</a></h2>
-			<p>I am an eastern box turtle living with <a href="http://razor.occams.info">@JoshData</a>. I'm adopted and can't be released into the wild.
+			<p>I am an eastern box turtle living with <a href="https://razor.occams.info">@JoshData</a>. I'm adopted and can't be released into the wild.
 			This is a live view of my home.</p>
 	
-			<img id="cam" src="http://desktop.occams.info:8081/rupert/snapshot" class="img-responsive">
+			<img id="cam" src="/rupert/snapshot" class="img-responsive">
 
 			<p>Image refreshes every 12 seconds. Not available if Josh&rsquo;s computer is turned off. I might be hiding in a place the camera can&rsquo;t see. A black and white image means the house lights are off (then you are seeing infra-red night vision).</p>
 		</div>
@@ -69,7 +69,7 @@
 
 		<script>
 		function refresh() {
-			$('#cam').attr('src', 'http://desktop.occams.info:8081/rupert/snapshot?cache=' + new Date().toISOString());
+			$('#cam').attr('src', '/rupert/snapshot?cache=' + new Date().toISOString());
 			setTimeout(refresh, 12000);
 		}
 		$(function() { refresh(); });
