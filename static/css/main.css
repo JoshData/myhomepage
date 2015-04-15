@@ -102,6 +102,10 @@ a, a:hover {
 	}
 	#about-me p {
 		line-height: 128%;
+		margin: 0;
+	}
+	#about-me > p {
+		margin: 1em 0;
 	}
 
 p.quote {
