@@ -1,13 +1,15 @@
-@import url(https://fonts.googleapis.com/css?family=Tienne:700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Oswald);
 
 body {
 	padding: 0;
 	margin: 0;
 	background-color: black;
+	font-family: 'Open Sans', sans-serif;
 }
 
 a, a:hover {
-	color: #251;
+	color: #261;
 }
 
 #bigphoto {
@@ -25,43 +27,40 @@ a, a:hover {
 
 #content-wrapper {
 	background-color: rgba(240,235,220,.87);
-	padding: 0 15px 25px 15px;
+	padding: 3vw 2vw 2vw 2vw;
 	max-width: 40%;
-	font-family: sans-serif;
 	font-size: 16px;
 	color: black;
 }
 
 #myname {
-	padding-top: 50px;
-	padding-bottom: 10px;
-	font-size: 3vw;
+	font-size: 4vw;
 	color: black;
 }
 	#myname h1 {
 		margin: 0;
-		font-family: 'Tienne', serif;
+		padding-bottom: 3px;
+		font-family: 'Oswald', sans-serif;
 		line-height: 100%;
 		font-size: 100%;
 	}
 		#myname h1 small {
-			font-size: 50%;
+			font-size: 60%;
 			color: black;
 		}
-	#myname p.deck {
+	#myname p {
 		font-size: 16px;
-		margin: .5em 0;
+		margin: 1em 0;
 	}
-	#myname .links {
-		margin-top: 3px;
-		font-size: 16px;
+	p#links {
+		font-size: 15px;
+		margin: 0;
 	}
-		#myname .links a {
-			margin: 0 .5em;
+		p#links i {
+			width: 1.2em;
+			color: #555;
+			line-height: 1.8em;
 		}
-			#myname .links a.first {
-				margin-left: 0;
-			}
 
 @media (max-width: 1199px) {
 	#bigphoto {
@@ -86,10 +85,11 @@ a, a:hover {
 }
 
 #about-me {
+	background-color: rgb(240,235,220);
+	padding: 3vw 2vw 2vw 2vw;
+	font-size: 16px;
+	color: black;
 }
-	#about-me > div {
-		margin-bottom: 1em;
-	}
 	#about-me a {
 		font-weight: bold;
 		border-bottom: 1px solid rgba(10,80,10,.7);
@@ -97,15 +97,20 @@ a, a:hover {
 	#about-me .col-xs-2 {
 		padding-right: 4px;
 	}
+	#about-me h3 {
+		margin: 0 0 3px 0;
+		font-size: 16px;
+	}
 	#about-me img {
 		border: 1px solid #557;
+		margin-bottom: 1em;
 	}
 	#about-me p {
-		line-height: 128%;
-		margin: 0;
+		margin-bottom: 1.75em;
 	}
-	#about-me > p {
-		margin: 1em 0;
+	#about-me .col-xs-10 p {
+		line-height: 128%;
+		margin-bottom: 1em;
 	}
 
 p.quote {
@@ -118,12 +123,9 @@ p.quote {
 	color: white;
 }
 
-#about-me h3 {
-	margin: 0 0 3px 0;
-	font-size: 16px;
-}
 
 #photos {
+	margin-top: 1em;
 	text-align: center;
 }
 #photos h2 {

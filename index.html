@@ -19,6 +19,7 @@
             }
         </style>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="static/css/main.css">
 
         <!--[if lt IE 9]>
@@ -29,14 +30,12 @@
 
     <div id="bigphoto">
       <div id="content-wrapper">
-          <div class="container-fluid">
-
           <div id="myname">
             <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
             <p class="deck">A civic hacker<sup><a href="https://opengovdata.io/2014/civic-hacking/">?</a></sup> in Washington, DC, USA.</p>
 
-            <div class="links">
-              <script>
+            <p id="links">
+                <i class="fa fa-envelope-o"></i> <script>
               var email_addr = "tj".split("").reverse().join("")
                   + String.fromCharCode(2*0x20)
                   + "smacco".split("").reverse().join("")
@@ -44,102 +43,109 @@
                   + "ofni".split("").reverse().join("");
               document.write("\x3ca class='first' href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
               </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
-              | <a href="http://twitter.com/joshdata">@JoshData</a>
-              | <a href="cv.html  ">cv</a> | <a href="blog">blog</a> | <a href="https://github.com/joshdata/">github</a>
-              | <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
-            </div>
-
-          </div>
-
-          <div id="about-me">
-
-            <p>I split my time between a number of projects that mostly mix technology and civic engagement:</p>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="https://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us"/></a>
-              </div>
-              <div class="col-xs-10">
-              	<h3><a href="https://www.govtrack.us">GovTrack.us</a> (founder)</h3>
-              	<p>Transparency for the U.S. Congress. Helps millions of individuals track and understand legislation; first website to create comprehensive open data for Congress; launched in 2004.</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="https://if.then.fund"><img src="static/img/ifthenfund.png" class="img-responsive" title="if.then.fund"/></a>
-              </div>
-              <div class="col-xs-10">
-              	<h3><a href="https://if.then.fund">if.then.fund</a> (co-founder)</h3>
-              	<p>Reshaping Congress by empowering small dollar donors to make contributions based on the outcome of votes in Congress. Launched in 2015.</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="https://mailinabox.email"><img src="static/img/mailinabox.png" class="img-responsive" title="Mail-in-a-Box"/></a>
-              </div>
-              <div class="col-xs-10">
-              	<h3><a href="https://mailinabox.email">Mail-in-a-Box</a></h3>
-              	<p>Take back control of your email with this easy-to-deploy mail server in a box. Mail-in-a-Box lets you become your own mail service provider in a few easy steps.</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="http://ancfinder.org"><img src="static/img/ancfinder.png" class="img-responsive" title="ANC Finder"/></a>
-              </div>
-              <div class="col-xs-10">
-          		  <p>I also co-organize <a href="http://dc.opendataday.org">Open Data Day DC</a> each year, support other hackathons, and you&rsquo;ll often find me at <a href="http://codefordc.org">Code for DC</a> where I work on <a href="http://www.ancfinder.org">ANC Finder</a>.</p>
-              </div>
-            </div>
-
-            <p>...plus various consulting.</p>
-            <p>I also like to write:</p>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="http://opengovdata.io/"><img src="static/img/ogdbook.jpeg" title="Open Government Data: The Book" class="img-responsive"/></a>
-              </div>
-              <div class="col-xs-10">
-                <h3><a href="https://opengovdata.io">Open Government Data: The Book</a></h3>
-                <p style="margin-bottom: .5em">My guide to the what and why of open government data (2012, updated in 2014).</p>
-
-                <h3><a href="https://hackathon.guide">Hackathon.guide</a></h3>
-                <p style="margin-bottom: .5em">A logistical guide to running a hackathon.</p>
-
-				<h3><a href="/blog">My Blog</a></h3>
-                <p style="margin-bottom: .5em">Various other thoughts.</p>
-              </div>
-            </div>
-
-            <p>And:</p>
-
-            <div class="row">
-              <div class="col-xs-2">
-                <a href="/rupert.html"><img src="static/img/rupert.jpeg" title="Rupert the Turtle" class="img-responsive"/></a>
-              </div>
-              <div class="col-xs-10">
-                <p>My pet turtle, <a href="/rupert.html">Rupert</a>.</p>
-              </div>
-            </div>
-
-            <hr>
-
-            <p>PGP key
-            <br><a href="https://keybase.io/joshdata">keybase.io/joshdata</a> / <a href="https://keybase.io/joshdata/key.asc">key.asc</a>
-            <br><small>5F4C 0E73 13CC D744 693B 2AEA <b>B920 41F4 C10B DD81</b></small></p>
-
-          </div>
+              <br><i class="fa fa-twitter"></i> <a href="http://twitter.com/joshdata">@JoshData</a>
+              <br><i class="fa fa-list"></i> <a href="cv.html">cv</a>
+              <br><i class="fa fa-file-text"></i> <a href="blog">blog</a>
+              <br><i class="fa fa-github"></i> <a href="https://github.com/joshdata/">github</a>
+              <br><i class="fa fa-external-link"></i> <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
+          </p>
         </div>
       </div>
     </div>
 
-	<div class="container-fluid">
-		<div id="photos" class="row">
-			<h2>the things I photograph</h2>
-		</div>
-	</div>
+    <div id="about-me">
+      <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <p>I split my time between a number of projects that mostly mix technology and civic engagement. My real work includes:</p>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="https://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us"/></a>
+            </div>
+            <div class="col-xs-10">
+              <h3><a href="https://www.govtrack.us">GovTrack.us</a> (founder)</h3>
+              <p>Transparency for the U.S. Congress. Helps millions of individuals track and understand legislation; first website to create comprehensive open data for Congress; launched in 2004.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="https://if.then.fund"><img src="static/img/ifthenfund.png" class="img-responsive" title="if.then.fund"/></a>
+            </div>
+            <div class="col-xs-10">
+              <h3><a href="https://if.then.fund">if.then.fund</a> (co-founder)</h3>
+              <p>Reshaping Congress by empowering small dollar donors to make contributions based on the outcome of votes in Congress. Launched in 2015.</p>
+            </div>
+          </div>
+
+          <p>Plus various consulting. My after-hours tech projects include:</p>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="http://ancfinder.org"><img src="static/img/ancfinder.png" class="img-responsive" title="ANC Finder"/></a>
+            </div>
+            <div class="col-xs-10">
+                <p>I co-organize <a href="http://dc.opendataday.org">Open Data Day DC</a> each year, support other hackathons, and you&rsquo;ll often find me at <a href="http://codefordc.org">Code for DC</a> where I work on <a href="http://www.ancfinder.org">ANC Finder</a>.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="https://mailinabox.email"><img src="static/img/mailinabox.png" class="img-responsive" title="Mail-in-a-Box"/></a>
+            </div>
+            <div class="col-xs-10">
+              <h3><a href="https://mailinabox.email">Mail-in-a-Box</a></h3>
+              <p>Take back control of your email with this easy-to-deploy mail server in a box. Mail-in-a-Box lets you become your own mail service provider in a few easy steps.</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <p>I also like to write:</p>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="http://opengovdata.io/"><img src="static/img/ogdbook.jpeg" title="Open Government Data: The Book" class="img-responsive"/></a>
+            </div>
+            <div class="col-xs-10">
+              <h3><a href="https://opengovdata.io">Open Government Data: The Book</a></h3>
+              <p style="margin-bottom: .5em">My guide to the what and why of open government data (2012, updated in 2014).</p>
+
+              <h3><a href="https://hackathon.guide">Hackathon.guide</a></h3>
+              <p style="margin-bottom: .5em">A logistical guide to running a hackathon.</p>
+
+              <h3><a href="/blog">My Blog</a></h3>
+              <p style="margin-bottom: .5em">Various other thoughts.</p>
+            </div>
+          </div>
+
+          <p style="margin-top: 2em;">And:</p>
+
+          <div class="row">
+            <div class="col-xs-2">
+              <a href="/rupert.html"><img src="static/img/rupert.jpeg" title="Rupert the Turtle" class="img-responsive"/></a>
+            </div>
+            <div class="col-xs-10">
+              <p>This is my pet turtle, <a href="/rupert.html">Rupert</a>, who has his own homepage and occassionally tweets.</p>
+            </div>
+          </div>
+
+          <hr>
+
+          <p>PGP key:
+          <br><a href="https://keybase.io/joshdata">keybase.io/joshdata</a> / <a href="https://keybase.io/joshdata/key.asc">key.asc</a>
+          <br><small>5F4C 0E73 13CC D744 693B 2AEA <b>B920 41F4 C10B DD81</b></small></p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        <div id="photos" class="row">
+            <h2>the things I photograph</h2>
+        </div>
+    </div>
            
 
           <p class="quote">&ldquo;If you already know what recursion is, just remember the answer. Otherwise, find someone who is standing closer to Douglas Hofstadter than you are; then ask him or her what recursion is.&rdquo; -- Andrew Plotkin</p>
@@ -147,17 +153,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-	<!--<script src='http://JoshDataPhotos.tumblr.com/api/read/json?number=8&type=photo'></script>-->
-	<script src='https://razor.occams.info/tumblr-api-proxy'></script>
-	<script>
-		for (var i = 0; i < tumblr_api_read.posts.length; i++) {
-			var n = $('<div class="col-sm-4"><a><img class="img-responsive"/></a></div>');
-			n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'].replace(/http:/, 'https:'))
-			n.find('img').attr('title', $('<div/>').html(tumblr_api_read.posts[i]['photo-caption']).text())
-			n.find('a').attr('href', tumblr_api_read.posts[i]['url-with-slug'])
-			$('#photos').append(n);
-		}
-	</script>
+    <!--<script src='http://JoshDataPhotos.tumblr.com/api/read/json?number=8&type=photo'></script>-->
+    <script src='https://razor.occams.info/tumblr-api-proxy'></script>
+    <script>
+        for (var i = 0; i < tumblr_api_read.posts.length; i++) {
+            var n = $('<div class="col-sm-4"><a><img class="img-responsive"/></a></div>');
+            n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'].replace(/http:/, 'https:'))
+            n.find('img').attr('title', $('<div/>').html(tumblr_api_read.posts[i]['photo-caption']).text())
+            n.find('a').attr('href', tumblr_api_read.posts[i]['url-with-slug'])
+            $('#photos').append(n);
+        }
+    </script>
 
     </body>
 </html>
