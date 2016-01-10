@@ -6,5 +6,5 @@ IMAGE_HEIGHT=$(echo $IMAGE_INFO | sed "s/.*JPEG \([0-9]*\)x\([0-9]*\).*/\2/")
 for width in 768 1200 1920; do
 	height=$(echo $width*$IMAGE_HEIGHT/$IMAGE_WIDTH | bc)
 	geom=${width}x${height}
-	echo convert $IMAGE_NAME -resize $geom $(echo $IMAGE_NAME | sed "s/\./_$geom./")
+	echo convert $IMAGE_NAME -resize $geom $(echo $IMAGE_NAME | sed "s/\./_$width./")
 done

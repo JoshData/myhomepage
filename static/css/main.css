@@ -4,29 +4,33 @@
 body {
 	padding: 0;
 	margin: 0;
-	background-color: black;
+	background-color: #eee7e0;
 	font-family: 'Open Sans', sans-serif;
 }
 
 a, a:hover {
-	color: #261;
+	color: #271;
+}
+
+hr {
+	margin: 30px 0;
+	border-color: #999;
+}
+
+h2 {
+	margin: 0 0 1em 0;
 }
 
 #bigphoto {
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: 100%;
+	background-size: 80%;
 	background-repeat: no-repeat;
-	background-position: top left; 
-	background-color: black;
+	background-position: top right; 
 	background-image: url(../img/me_1920.jpeg);
 	padding: 15px;
-	min-height: 65vw
+	min-height: 53vw
 }
 
 #content-wrapper {
-	background-color: rgba(240,235,220,.87);
 	padding: 3vw 2vw 2vw 2vw;
 	max-width: 40%;
 	font-size: 16px;
@@ -38,8 +42,8 @@ a, a:hover {
 	color: black;
 }
 	#myname h1 {
-		margin: 0;
-		padding-bottom: 3px;
+		margin: 0 0 .5em 0;
+		padding: 0;
 		font-family: 'Oswald', sans-serif;
 		line-height: 100%;
 		font-size: 100%;
@@ -74,9 +78,10 @@ a, a:hover {
 @media (max-width: 767px) {
 	#bigphoto {
 	  background-image: url(../img/me_768.jpeg);
+ 	  background-size: 100%;
 	}
 	#content-wrapper {
-		margin-top: 100vw;
+		margin-top: 60vw;
 		max-width: 100%;
 	}
 	#myname {
@@ -85,14 +90,12 @@ a, a:hover {
 }
 
 #about-me {
-	background-color: rgb(240,235,220);
 	padding: 3vw 2vw 2vw 2vw;
 	font-size: 16px;
 	color: black;
 }
 	#about-me a {
 		font-weight: bold;
-		border-bottom: 1px solid rgba(10,80,10,.7);
 	}
 	#about-me .col-xs-2 {
 		padding-right: 4px;
@@ -102,17 +105,24 @@ a, a:hover {
 		font-size: 16px;
 	}
 	#about-me img {
-		margin-bottom: 1em;
+		margin-bottom: 3em;
 	}
 		#about-me img.with-border {
 			border: 1px solid #557;
 		}
 	#about-me p {
-		margin-bottom: 1.75em;
+		margin-bottom: 3em;
 	}
 	#about-me .col-xs-10 p {
 		line-height: 128%;
 		margin-bottom: 1em;
+	}
+
+#about-me .item {
+	margin: 3em 0;
+}
+	#about-me .item p {
+		margin-bottom: 0;
 	}
 
 p.quote {
@@ -127,11 +137,12 @@ p.quote {
 
 
 #photos {
+	background-color: black;
 	margin-top: 1em;
 	text-align: center;
 }
 #photos h2 {
-	margin: 1.5em 0;
+	margin: 3em 0;
 	color: #EFF;
 	font-size: 14px;
 }
@@ -140,7 +151,3 @@ p.quote {
 	margin-bottom: 30px;
 }
 
-h2 {
-	margin: 1.5em 0 1em 0;
-	font-size: 14px;
-}
