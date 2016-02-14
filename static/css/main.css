@@ -18,11 +18,13 @@ hr {
 }
 
 h2 {
-	margin: 0 0 1em 0;
+	font-size: 22px;
+	font-weight: bold;
+	margin: 2em 0 1em 0;
 }
 
 #bigphoto {
-	background-size: 80%;
+	background-size: 85%;
 	background-repeat: no-repeat;
 	background-position: top right; 
 	background-image: url(../img/me_1920.jpeg);
@@ -101,8 +103,12 @@ h2 {
 		padding-right: 4px;
 	}
 	#about-me h3 {
-		margin: 0 0 3px 0;
+		margin: 0 0 .5em 0;
 		font-size: 16px;
+	}
+	#about-me h3 span {
+		display: block;
+		font-size: 90%;
 	}
 	#about-me img {
 		margin-bottom: 3em;
@@ -111,18 +117,11 @@ h2 {
 			border: 1px solid #557;
 		}
 	#about-me p {
-		margin-bottom: 3em;
+		margin-bottom: 1em;
 	}
 	#about-me .col-xs-10 p {
 		line-height: 128%;
 		margin-bottom: 1em;
-	}
-
-#about-me .item {
-	margin: 3em 0;
-}
-	#about-me .item p {
-		margin-bottom: 0;
 	}
 
 p.quote {
