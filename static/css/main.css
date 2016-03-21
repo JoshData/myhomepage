@@ -20,7 +20,7 @@ hr {
 h2 {
 	font-size: 22px;
 	font-weight: bold;
-	margin: 2em 0 1em 0;
+	margin: 2em 0 1.5em 0;
 }
 
 #bigphoto {
@@ -117,7 +117,7 @@ h2 {
 			border: 1px solid #557;
 		}
 	#about-me p {
-		margin-bottom: 1em;
+		margin-bottom: 2em;
 	}
 	#about-me .col-xs-10 p {
 		line-height: 128%;
@@ -149,4 +149,3 @@ p.quote {
 	border: 1px solid #555;
 	margin-bottom: 30px;
 }
-
