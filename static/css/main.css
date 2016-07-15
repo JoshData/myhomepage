@@ -103,8 +103,9 @@ h2 {
 		padding-right: 4px;
 	}
 	#about-me h3 {
-		margin: 0 0 .5em 0;
+		margin: 0 0 .2em 0;
 		font-size: 16px;
+		line-height: 130%;
 	}
 	#about-me h3 span {
 		display: block;
@@ -116,9 +117,6 @@ h2 {
 		#about-me img.with-border {
 			border: 1px solid #557;
 		}
-	#about-me p {
-		margin-bottom: 2em;
-	}
 	#about-me .col-xs-10 p {
 		line-height: 128%;
 		margin-bottom: 1em;
