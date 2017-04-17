@@ -22,36 +22,39 @@
     </head>
     <body>
 
-    <div id="bigphoto">
-      <div id="content-wrapper">
-          <div id="myname">
-            <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
+    <header>
+      <img src="static/img/me.jpeg"/>
+      <img src="static/img/mybrain.jpeg"/>
+    </header>
 
-            <p id="links">
-                <i class="fa fa-envelope-o"></i> <script>
-              var email_addr = "tj".split("").reverse().join("")
-                  + String.fromCharCode(2*0x20)
-                  + "smacco".split("").reverse().join("")
-                  + "."
-                  + "ofni".split("").reverse().join("");
-              document.write("\x3ca class='first' href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
-              </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
-              <br><i class="fa fa-twitter"></i> <a href="http://twitter.com/joshdata">@JoshData</a>
-              <br><i class="fa fa-github"></i> <a href="https://github.com/joshdata/">github</a>
-              <br><i class="fa fa-list"></i> <a href="cv.html">resume</a> / <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
-              <br><i class="fa fa-file-text"></i> <a href="blog">blog</a> / <a href="https://medium.com/@joshuatauberer">medium</a>
-          </p>
+    <div class="container">
 
-          <hr>
+      <div id="myname">
+        <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
 
-          <p>I am a civic hacker, an entrepreneur, and an advocate for greater transparency in government.</p>
+        <p id="links">
+            <i class="fa fa-envelope-o"></i> <script>
+          var email_addr = "tj".split("").reverse().join("")
+              + String.fromCharCode(2*0x20)
+              + "smacco".split("").reverse().join("")
+              + "."
+              + "ofni".split("").reverse().join("");
+          document.write("\x3ca class='first' href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
+          </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
+          <br><i class="fa fa-twitter"></i> <a href="http://twitter.com/joshdata">@JoshData</a>
+          <br><i class="fa fa-github"></i> <a href="https://github.com/joshdata/">github</a>
+          <br><i class="fa fa-list"></i> <a href="cv.html">resume</a> / <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
+          <br><i class="fa fa-file-text"></i> <a href="https://medium.com/@joshuatauberer">blog posts</a> (<a href="blog">archive</a>)
+        </p>
 
-        </div>
+        <hr>
+
+        <p>I am a civic hacker, entrepreneur, and technology consultant living in Washington, DC.</p>
+
+        <hr>
       </div>
-    </div>
 
-    <div id="about-me">
-      <div class="container-fluid">
+      <div id="about-me">
         <h2 style="margin-top: 0">My Work</h2>
 
         <div class="row">
@@ -63,19 +66,7 @@
             </div>
             <div class="col-xs-8">
               <h3><a href="https://www.govtrack.us">GovTrack.us</a> <span>founder</span></h3>
-              <p>Transparency for the U.S. Congress. Helps millions of individuals track and understand legislation; first website to create comprehensive open data for Congress; launched in 2004.</p>
-            </div>
-          </div>
-          </div>
-
-          <div class="col-sm-3">
-          <div class="row">
-            <div class="col-xs-4">
-              <a href="https://if.then.fund"><img src="static/img/ifthenfund.png" class="img-responsive" title="if.then.fund"/></a>
-            </div>
-            <div class="col-xs-8">
-              <h3><a href="https://if.then.fund">if.then.fund</a> <span>co-founder</span></h3>
-              <p>Reshaping Congress by empowering small dollar donors to make contributions based on the outcome of votes in Congress. Launched in 2015.</p>
+              <p>Track legislation moving through the United States Congress. Catalyzed the open gov data movement.</p>
             </div>
           </div>
           </div>
@@ -87,7 +78,7 @@
             </div>
             <div class="col-xs-8">
               <h3><a href="http://govready.com/">GovReady PBC</a> <span>software consultant</span></h3>
-              <p>GovReady develops modern "Compliance as Code" tools to help teams using Agile and DevOps get their ATO (Authority to Operate) faster.</p>
+              <p>Modern "Compliance as Code" tools to help teams using Agile and DevOps get their ATO faster.</p>
             </div>
           </div>
           </div>
@@ -99,14 +90,16 @@
             </div>
             <div class="col-xs-8">
               <h3><a href="http://www.larsa4d.com">LARSA, Inc.</a> <span>senior technologist</span></h3>
-              <p>Structural analysis software for bridges and earthquake engineering.</p>
+              <p>Structural analysis software for bridge and earthquake engineering.</p>
             </div>
           </div>
           </div>
 
-        </div> <!-- /row -->
+          <div class="col-sm-3">
+            <p>I am also a public member of the <a href="http://ogag.dc.gov">District of Columbia Government&rsquo;s Open Government Advisory Group</a>.</p>
+          </div>
 
-        <p>I am also a public member of the <a href="http://dc.gov/page/open-government-advisory-group">District of Columbia Government&rsquo;s Open Government Advisory Group</a>.</p>
+        </div> <!-- /row -->
 
         <hr>
 
@@ -198,12 +191,8 @@
 
           <div class="col-sm-4">
             <p><a href="https://uslaw.link/">uslaw.link</a>, a legal citation lookup tool.</p>
+            <p><a href="https://ツ.life">ツ.life</a>, an IDNA domain test.</p>
             <p><a href="https://joshdata.github.io/infinite-tree">Infinite Tree</a>, a relaxing, infinitely-scrolling tree.</p>
-
-            <div><a href="https://github.com/JoshData/python-email-validator">email-validator</a></div>
-            <div><a href="https://github.com/mail-in-a-box/free_tls_certificates">free-tls-certificates</a></div>
-            <div><a href="https://github.com/JoshData/xml_diff">xml_diff</a></div>
-            <div><a href="https://github.com/JoshData/html5-stub">html5-stub</a></div>
           </div>
         </div>
         
@@ -229,7 +218,6 @@
           </div>
         </div>
       </div>
-      </div>
     </div>
 
     <div id="photos" class="container-fluid">
@@ -247,6 +235,8 @@
     <script src='https://razor.occams.info/tumblr-api-proxy'></script>
     <script>
         for (var i = 0; i < tumblr_api_read.posts.length; i++) {
+            if ((i % 3) == 0)
+              $('#photos-container').append($("<div class='clearfix'></div>"));
             var n = $('<div class="col-sm-4"><a><img class="img-responsive"/></a></div>');
             n.find('img').attr('src', tumblr_api_read.posts[i]['photo-url-500'].replace(/http:/, 'https:'))
             n.find('img').attr('title', $('<div/>').html(tumblr_api_read.posts[i]['photo-caption']).text())

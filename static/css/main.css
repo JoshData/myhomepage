@@ -4,12 +4,14 @@
 body {
 	padding: 0;
 	margin: 0;
-	background-color: #eee7e0;
+	background-color: black;
 	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	color: white;
 }
 
 a, a:hover {
-	color: #271;
+	color: #FB5;
 }
 
 hr {
@@ -23,39 +25,26 @@ h2 {
 	margin: 2em 0 1.5em 0;
 }
 
-#bigphoto {
-	background-size: 85%;
-	background-repeat: no-repeat;
-	background-position: top right; 
-	background-image: url(../img/me_1920.jpeg);
-	padding: 15px;
-	min-height: 53vw
+header img {
+	width: 49%;
 }
 
 #content-wrapper {
-	padding: 3vw 2vw 2vw 2vw;
-	max-width: 40%;
-	font-size: 16px;
-	color: black;
 }
 
 #myname {
-	font-size: 4vw;
-	color: black;
 }
 	#myname h1 {
-		margin: 0 0 .5em 0;
+		margin: 60px 0 .5em 0;
 		padding: 0;
 		font-family: 'Oswald', sans-serif;
 		line-height: 100%;
-		font-size: 100%;
+		font-size: 4vw;
 	}
 		#myname h1 small {
 			font-size: 60%;
-			color: black;
 		}
 	#myname p {
-		font-size: 16px;
 		margin: 1em 0;
 	}
 	p#links {
@@ -64,37 +53,11 @@ h2 {
 	}
 		p#links i {
 			width: 1.2em;
-			color: #555;
+			color: #CCC;
 			line-height: 1.8em;
 		}
 
-@media (max-width: 1199px) {
-	#bigphoto {
-	  background-image: url(../img/me_1200.jpeg);
-	}
-	#content-wrapper {
-		font-size: 14px;
-		font-weight: normal;
-	}
-}
-@media (max-width: 767px) {
-	#bigphoto {
-	  background-image: url(../img/me_768.jpeg);
- 	  background-size: 100%;
-	}
-	#content-wrapper {
-		margin-top: 60vw;
-		max-width: 100%;
-	}
-	#myname {
-		font-size: 5vw;
-	}
-}
-
 #about-me {
-	padding: 3vw 2vw 2vw 2vw;
-	font-size: 16px;
-	color: black;
 }
 	#about-me a {
 		font-weight: bold;
@@ -129,19 +92,15 @@ p.quote {
 	border-top: 1px solid #CCC;
 	border-bottom: 1px solid #CCC;
 	font-size: 90%;
-	color: white;
 }
 
 
 #photos {
-	background-color: black;
 	margin-top: 1em;
 	text-align: center;
 }
 #photos h2 {
 	margin: 3em 0;
-	color: #EFF;
-	font-size: 14px;
 }
 #photos img {
 	border: 1px solid #555;
