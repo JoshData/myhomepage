@@ -25,13 +25,15 @@
     <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?a" width="100%" style="margin: 5px 0 4em 0">')</script>
 
     <div class="container">
-      <div class="row">
-        <div class="col-sm-5">
-          <img src="static/img/me.jpeg" class="img-responsive" style="margin-bottom: 2em" />
+      <div id="myname" class="row">
+        <div class="col-sm-5 col-md-4">
+          <div id="img-wrapper">
+            <img src="static/img/me.jpeg" class="img-responsive"/>
+          </div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-6">
 
-      <div id="myname">
+      <div>
         <h1>Joshua Tauberer<small>, &nbsp;Ph.D.</small></h1>
 
         <p id="links">
@@ -44,12 +46,12 @@
           document.write("\x3ca class='first' href='mailto:" + email_addr + "'\x3e" + email_addr + "\x3c/a\x3e");
           </script><noscript>email address protected from spambots; use a JavaScript-enabled browser to see it</noscript>
           <br><i class="fa fa-twitter"></i> <a href="http://twitter.com/joshdata">@JoshData</a>
-          <br><i class="fa fa-github"></i> <a href="https://github.com/joshdata/">github</a>
+          <br><i class="fa fa-github"></i> <a href="https://github.com/joshdata/">github/joshdata</a>
           <br><i class="fa fa-list"></i> <a href="cv.html">resume</a> / <a href="http://www.upenn.edu/gazette/0913/feature4_1.html">bio</a>
-          <br><i class="fa fa-file-text"></i> <a href="https://medium.com/@joshuatauberer">blog posts</a> (<a href="blog">archive</a>)
+          <br><i class="fa fa-file-text"></i> <a href="https://medium.com/@joshuatauberer">blog posts</a> (<a href="blog">archived posts</a>)
         </p>
 
-        <p>I am a civic hacker, entrepreneur, and technology consultant living in Washington, DC.</p>
+        <p>I am a civic hacker, entrepreneur, and technology consultant living in Washington, DC best known for creating <a href="https://www.govtrack.us">GovTrack.us</a>, the widely used website tracking the U.S. Congress.</p>
 
       </div>
 
@@ -57,58 +59,37 @@
       </div>
     </div>
 
-    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?b" width="100%" style="margin: 4em 0">')</script>
-
   <div id="about-me">
     <div class="container">
         <h2 style="margin-top: 0">My Work</h2>
 
-        <div class="row">
+        <p>I split my time between...</p>
 
-          <div class="col-sm-3">
-          <div class="row">
-            <div class="col-xs-4">
-              <a href="https://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive with-border" title="GovTrack.us"/></a>
-            </div>
-            <div class="col-xs-8">
+        <div id="my-work" class="row">
+
+          <div class="col-sm-5">
               <h3><a href="https://www.govtrack.us">GovTrack.us</a> <span>founder</span></h3>
-              <p>Track legislation moving through the United States Congress. Catalyzed the open gov data movement.</p>
-            </div>
-          </div>
+              <a href="https://www.govtrack.us"><img src="static/img/govtrack.png" class="img-responsive" title="GovTrack.us" style="border: 1px solid white" /></a>
+              <p>In 2003 I founded what would become one of the world’s most visited free government information websites. GovTrack.us uses official government information plus our own original research to track the daily activities of the United States Congress. It is used by some 10 million individuals annually, including congressional staff, journalists, legislative professionals at small business, educators and students, and the general public. Our work catalyzed the world-wide open government data movement in the mid 2000.</p>
+              <p>GovTrack has had an out-sized impact given our small size of four part-time staffers and an annual operating budget of approximately $75,000 from advertising and member support/crowd funding.</p>
           </div>
 
-          <div class="col-sm-3">
-          <div class="row">
-            <div class="col-xs-4">
-              <a href="http://govready.com/"><img src="http://govready.com/img/govready_logo.png" class="img-responsive" title="GovReady PBC"/></a>
-            </div>
-            <div class="col-xs-8">
+          <div class="col-sm-7">
               <h3><a href="http://govready.com/">GovReady PBC</a> <span>software consultant</span></h3>
-              <p>Modern "Compliance as Code" tools to help teams using Agile and DevOps get their ATO faster.</p>
-            </div>
-          </div>
-          </div>
+              <a href="http://govready.com/"><img src="static/img/govready.png" class="img-responsive" title="GovReady PBC"/></a>
+              <p>GovReady PBC applies modern technology practices such as agile development to governance, risk, and compliance of federal IT systems. As a senior consulting engineer, I am leading the development of the company’s software platform from prototyping through deployment with early adopter partners.</p>
 
-          <div class="col-sm-3">
-          <div class="row">
-            <div class="col-xs-4">
-              <a href="http://www.larsa4d.com"><img src="static/img/larsa.jpg" class="img-responsive" title="LARSA, Inc."/></a>
-            </div>
-            <div class="col-xs-8">
               <h3><a href="http://www.larsa4d.com">LARSA, Inc.</a> <span>senior technologist</span></h3>
-              <p>Structural analysis software for bridge and earthquake engineering.</p>
-            </div>
+              <a href="http://www.larsa4d.com"><img src="static/img/larsa.jpg" class="img-responsive" title="LARSA, Inc." style="border: 1px solid white"/></a>
+              <p>Leading multinational construction firms rely each day on software I developed at LARSA, Inc. to design billion-dollar bridges and other complex structures. LARSA’s software is a desktop application used by structural engineers. In my role as senior technologist, I manage the development of LARSA’s emerging products and bring modern technology development practices to our operations.</p>
           </div>
-          </div>
-
-          <div class="col-sm-3">
-            <p>I am also a public member of the <a href="http://ogag.dc.gov">District of Columbia Government&rsquo;s Open Government Advisory Group</a>.</p>
-          </div>
-
         </div> <!-- /row -->
+
+            <p>I am also a public member of the <a href="http://ogag.dc.gov">District of Columbia Government&rsquo;s Open Government Advisory Group</a>.</p>
+
     </div>
 
-    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?d" width="100%" style="margin: 4em 0">')</script>
+    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?e" width="100%" style="margin: 4em 0">')</script>
 
     <div class="container">
         <h2>Some Writing</h2>
@@ -126,11 +107,15 @@
               <div style="font-size: 90%">
                 <p><a href="https://medium.com/@joshuatauberer/civic-techs-act-iii-is-beginning-4df5d1720468#.tuqn08kci">Civic Tech’s Act III is beginning.</a> (Sept. 22, 2016)</p>
 
+                <!--
                 <p><a href="https://medium.com/@joshuatauberer/govtrack-now-actually-uses-open-government-data-5fc16f377e86#.t3gqyr2qu">GovTrack now actually uses open government data</a> (July 6, 2016)</p>
+                -->
 
                 <p><a href="https://medium.com/@joshuatauberer/how-to-build-an-app-to-call-write-congress-f79771addc2b#.2tn4afl7b">How To Build an App to Call/Write Congress</a> (Dec. 2016)</p>
 
+                <!--
                 <p><a href="https://theunitedstates.io/licensing/">Best-Practices Language for Making Data “License-Free”</a> (2013-2014)</p>
+                -->
 
                 <p><a href="https://opengovdata.io">Open Government Data: The Book</a> (2012/2014)</p>
               </div>
@@ -170,7 +155,6 @@
 
     </div>
 
-    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?e" width="100%" style="margin: 4em 0">')</script>
 
     <div class="container">
 
@@ -178,7 +162,7 @@
 
         <div class="row">
 
-          <div class="col-sm-4">
+          <div class="col-sm-6">
           <div class="row">
             <div class="col-xs-3">
               <a href="https://mailinabox.email"><img src="static/img/mailinabox.png" class="img-responsive" title="Mail-in-a-Box"/></a>
@@ -190,25 +174,12 @@
           </div>
           </div>
 
-          <div class="col-sm-4">
-          <div class="row">
-            <div class="col-xs-3">
-              <a href="http://dc.opendataday.org"><img src="static/img/ancfinder.png" class="img-responsive" title="Open Data Day DC"/></a>
-            </div>
-            <div class="col-xs-9">
-                <p>From 2011-2016 I was the lead organizer of <a href="http://dc.opendataday.org">Open Data Day DC</a>, an annual hackathon and training event, and you&rsquo;ll often find me at <a href="http://codefordc.org">Code for DC</a>.</p>
-            </div>
-          </div>
-          </div>
-
-          <div class="col-sm-4">
+          <div class="col-sm-6">
             <p><a href="https://uslaw.link/">uslaw.link</a>, a legal citation lookup tool.</p>
             <p><a href="https://ツ.life">ツ.life</a>, an IDNA domain test.</p>
             <p><a href="https://joshdata.github.io/infinite-tree">Infinite Tree</a>, a relaxing, infinitely-scrolling tree.</p>
           </div>
         </div>
-        
-        <hr>
 
         <div class="row">
 
@@ -232,15 +203,15 @@
       </div>
     </div>
 
-    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?c" width="100%" style="margin: 4em 0">')</script>
-
     <div id="photos" class="container-fluid">
             <h2>the things I photograph</h2>
         <div id="photos-container" class="row">
         </div>
+    </div>
+
+    <script>document.write('<img src="https://www.govtrack.us/mondrian/image/' + parseInt(window.innerWidth) + '/' + parseInt(window.innerHeight/7) + '/png?d" width="100%" style="margin: 4em 0">')</script>
 
         <p class="quote">&ldquo;If you already know what recursion is, just remember the answer. Otherwise, find someone who is standing closer to Douglas Hofstadter than you are; then ask him or her what recursion is.&rdquo; -- Andrew Plotkin</p>
-    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>

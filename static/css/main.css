@@ -32,10 +32,31 @@ header img {
 #content-wrapper {
 }
 
-#myname {
+#my-photo {
+
 }
+
+#myname {
+	margin-bottom: 30px;
+}
+	#myname #img-wrapper {
+		padding-right: 15px;
+	}
+	#myname img {
+		border: 1px solid #EEE;
+		margin-right: 60px;
+	}
+	@media screen and (max-width: 768px) {
+		#myname #img-wrapper {
+			padding-right: 0;
+		}
+		#myname img {
+			margin: 3em auto;
+		}
+	}
+
 	#myname h1 {
-		margin: 0px 0 .5em 0;
+		margin: .5em 0 1em 0;
 		padding: 0;
 		font-family: 'Oswald', sans-serif;
 		line-height: 100%;
@@ -70,17 +91,20 @@ header img {
 		font-size: 16px;
 		line-height: 130%;
 	}
+		#my-work h3 {
+			margin-top: 1.5em;
+		}
 	#about-me h3 span {
 		display: block;
 		font-size: 90%;
+		font-style: italic;
 	}
-	#about-me img {
-		margin-bottom: 3em;
+	#my-work img {
+		float: right;
+		margin: 0 0 1em 1em;
+		max-width: 9vw;
 	}
-		#about-me img.with-border {
-			border: 1px solid #557;
-		}
-	#about-me .col-xs-10 p {
+	#about-me p {
 		line-height: 128%;
 		margin-bottom: 1em;
 	}
