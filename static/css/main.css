@@ -4,14 +4,15 @@
 body {
 	padding: 0;
 	margin: 0;
-	background-color: black;
+	background-color: white;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 15px;
-	color: white;
+	font-size: 16px;
+	color: #232d3c;
 }
 
 a, a:hover {
-	color: #FB5;
+	color: #52698c;
+	text-decoration: underline;
 }
 
 hr {
@@ -22,7 +23,8 @@ hr {
 h2 {
 	font-size: 22px;
 	font-weight: bold;
-	margin: 2em 0 1.5em 0;
+	margin: 0 0 1em 0;
+	color: #706b72;
 }
 
 header img {
@@ -37,13 +39,13 @@ header img {
 }
 
 #myname {
-	margin-bottom: 30px;
+	margin-top: 60px;
 }
 	#myname #img-wrapper {
 		padding-right: 15px;
 	}
 	#myname img {
-		border: 1px solid #EEE;
+		border: 1px solid #232d3c;
 		margin-right: 60px;
 	}
 	@media screen and (max-width: 768px) {
@@ -56,7 +58,7 @@ header img {
 	}
 
 	#myname h1 {
-		margin: .5em 0 1em 0;
+		margin: .5em 0 .5em 0;
 		padding: 0;
 		font-family: 'Oswald', sans-serif;
 		line-height: 100%;
@@ -69,40 +71,33 @@ header img {
 		margin: 1em 0;
 	}
 	p#links {
-		font-size: 15px;
 		margin: 0;
 	}
 		p#links i {
 			width: 1.2em;
-			color: #CCC;
+			color: #706b72;
 			line-height: 1.8em;
 		}
+
+.mondrianish {
+	width: 100%;
+	margin: 60px 0;
+	border: 1px solid #555;
+}
 
 #about-me {
 }
 	#about-me a {
 		font-weight: bold;
 	}
-	#about-me .col-xs-2 {
-		padding-right: 4px;
-	}
 	#about-me h3 {
 		margin: 0 0 .2em 0;
-		font-size: 16px;
+		font-size: 17px;
 		line-height: 130%;
 	}
-		#my-work h3 {
-			margin-top: 1.5em;
-		}
 	#about-me h3 span {
 		display: block;
-		font-size: 90%;
-		font-style: italic;
-	}
-	#my-work img {
-		float: right;
-		margin: 0 0 1em 1em;
-		max-width: 9vw;
+		font-weight: bold;
 	}
 	#about-me p {
 		line-height: 128%;
@@ -110,7 +105,7 @@ header img {
 	}
 
 p.quote {
-	margin: 3em auto;
+	margin: 0 auto 3em auto;
 	max-width: 640px;
 	padding: 1em;
 	border-top: 1px solid #CCC;
@@ -119,14 +114,3 @@ p.quote {
 }
 
 
-#photos {
-	margin-top: 1em;
-	text-align: center;
-}
-#photos h2 {
-	margin: 3em 0;
-}
-#photos img {
-	border: 1px solid #555;
-	margin-bottom: 30px;
-}
