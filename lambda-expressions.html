@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Lambda Expressions: A Guide</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Source+Code+Pro:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+      body {
+        padding: 50px 0;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14pt;
+      }
+
+      h1 {
+        font-weight: bold;
+        font-family: 'Oswald', sans-serif;
+      }
+
+      p.subhead {
+        font-size: 120%;
+        margin-bottom: 2em;
+      }
+
+      hr {
+        margin: 2em 0;
+      }
+
+      h2 {
+        margin: 1.5em 0 .75em 0;
+        font-family: 'Oswald', sans-serif;
+      }
+
+      h3 {
+        margin: 2em 0 .75em 0;
+        font-size: 15pt;
+        font-weight: bold;
+        background-color: #555;
+        color: white;
+        padding: 3px;
+      }
+
+      figure {
+        margin: 1.5em 0;
+      }
+
+      figcaption {
+        background-color: #F8F8FF;
+        font-family: 'Oswald', sans-serif;
+        padding: 3px 7px;
+        font-size: 90%;
+      }
+
+      li {
+        margin-bottom: 1em;
+      }
+
+      code {
+        font-family: 'Source Code Pro', monospace;
+        font-weight: bold;
+        color: #A00;
+        border: 1px solid #AAA;
+        padding: 1px;
+      }
+        pre code { border: none; }
+
+      strong {
+        font-family: 'Oswald', sans-serif;
+        font-size: 15pt;
+        letter-spacing: .5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-md" style="max-width: 40em">
+
+    <h1>Lambda Expressions</h1>
+
+    <p class="subhead">A guide to programming lambda expressions in C++, C#, Java, Javascript, and Python by <a href="https://joshdata.me">JoshData</a>.</p>
+
+    <p>A <strong>lambda expression</strong> is a convenient syntax available in many programming languages for writing short functions. Lambda expressions do for functions what object-oriented programing does for objects: It makes a function something you can assign to a variable.</p>
+
+    <p>Lambda expressions are also called anonymous functions, lambda functions, and closures. The capabilities of lambda expressions differs across programming languages, and some programming languages have multiple ways of writing lambda expressions. The concept originates in philosophy.</p>
+
+
+    <h2>Background Concepts</h2>
+
+    <p>Let&rsquo;s cover some general programming concepts first.</p>
+
+    <h3>Statements versus expressions</h3>
+    <p>All programming languages with lambda expressions distinguish <strong>statements</strong> from <strong>expressions</strong>:</p>
+    <ul>
+      <li>A statement is typically a line of code. Statements <strong>control the flow of the program</strong>, like <code>if</code> statements, <code>for</code> loops, calling subroutines, and <code>return</code> statements in functions. An assignment to a variable (e.g. <code>x = y</code>) is also a statement.</li>
+      <li>An expression is code within a statement that <strong>computes a value</strong>. Expressions are made up of constants, variables, arithmetic operators, function calls, method calls, property accesors, and so on. An expression encodes a set of instructions that results in the computation of one value.</li>
+    </ul>
+
+    <p><code>if x > y</code> is a statement. <code>x > y</code> is an expression &mdash; it computes one value, in this case either true or false. The <code>if</code> statement takes an action based on the value of the expression.</p>
+
+    <h3>Statically versus dynamically typed languages</h3>
+
+    <p>This guide covers a few common programming languages, and if you are reading it to learn about multiple languages it may be helpful to distinguish:</p>
+    <ul>
+        <li><strong>Statically typed</strong> languages, meaning all variables are defined with a type in source code that is known to the compiler. C, C++, C#, and Java are statically typed languages using types such as <code>int</code>, <code>double</code>, <code>string</code>, etc.</li>
+        <li><strong>Dynamically typed</strong> languages, meaning any variable can hold any type of value. Variable declarations with types do not occur in these languages. Python and Javascript are dynamically typed. These languages still have types, usually the same types as in the C-family languages, but they&rsquo;re only for the values computed in memory, not for variables in source code.</li>
+    </ul>
+
+    <h2>Lambda Syntax</h2>
+
+    <p>A lambda expression is a function written in a shorthand syntax, and we&rsquo;ll start by looking at the syntax of lambda expressions.</p>
+
+    <p>Here is a <em>regular</em> function (not a lambda function, just a normal function) that adds one to a number as it would be written in C, C++, C#, and Java (they all happen to be identical in this case) and in Javascript. We&rsquo;ll look at how the same function would be written as a lambda expression.</p>
+
+    <figure>
+    <figcaption>
+      Add one, in C, C++, C#, and Java
+    </figcaption>
+    <pre><code class="csharp">
+    double add_one(double x) {
+      return x + 1;
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Add one, in Javascript
+    </figcaption>
+    <pre><code class="js">
+    function add_one(x) {
+      return x + 1;
+    }
+    </code></pre>
+    </figure>
+
+    <p>In this example, there is a single argument <code>x</code>, the expression <code>x + 1</code> is computed, and that expression is returned to the caller.</p>
+
+    <p>It can be written shorter as a lambda expression in modern versions of many languages, including C++ (starting in C++11), C# (starting in C# 9.0), Java (since Java 8), Javascript (starting in ECMAScript 6), and Python (since around Python 2.2):</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    [](double x) { return x + 1; }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="csharp">
+    x => x + 1
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java
+    </figcaption>
+    <pre><code class="java">
+    x -> x + 1
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Javascript
+    </figcaption>
+    <pre><code class="js">
+    x => x + 1
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="python">
+    lambda x : x + 1
+    </code></pre>
+    </figure>
+
+    <p>C#, Java, and Javascript use an arrow symbol (made up of an equal sign or dash plus a greater than sign) to separate the arguments from the expression body. The C# and Javascript syntaxes happen to be identical in this case.</p>
+
+    <p>In the academic discipline of philosophy, the function would be written with the Greek lowercase letter lambda λ denoting the start of a lambda expression:</p>
+
+    <pre><code class="plaintext">
+    λx.x+1
+    </code></pre>
+
+    <hr>
+
+    <p>Here&rsquo;s a function that returns the maximum value of two numbers, first written as a regular function:</p>
+
+    <figure>
+    <figcaption>
+      Maximum value, in C, C++, C#, and Java
+    </figcaption>
+    <pre><code class="csharp">
+    double max(double x, double y) {
+      if (x > y)
+        return x;
+      return y;
+    }
+    </code></pre>
+    </figure>
+
+    <p>and then as a lambda expression in various languages:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    [](double x, double y) {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C# and Javascript
+    </figcaption>
+    <pre><code class="csharp">
+    (x, y) => {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java
+    </figcaption>
+    <pre><code class="java">
+    (x, y) -> {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <p>Javascript has a longer alternative syntax that looks like this:</p>
+
+    <figure>
+    <figcaption>
+      Javascript alternate syntax
+    </figcaption>
+    <pre><code class="js">
+    function(x, y) {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <p>It&rsquo;s equivalent and was available in earlier versions of Javascript before lambda expressions were added.</p>
+
+    <hr>
+
+    <p>Lambda expressions can also have zero arguments:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    []() {
+      cout &lt;&lt; "Hello world." &lt;&lt; endl;    
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="csharp">
+    () => {
+      Console.WriteLine("Hello world.");    
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java
+    </figcaption>
+    <pre><code class="java">
+    () -> {
+      System.out.println("Hello world.");
+    }
+    </code></pre>
+    </figure>    
+
+    <figure>
+    <figcaption>
+      Javascript
+    </figcaption>
+    <pre><code class="js">
+    () => {
+      console.log("Hello world.");    
+    }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    lambda : print("Hello")
+    </code></pre>
+    </figure>
+
+    <hr>
+
+    <p>Lambda expressions have most of the same components as a normal function:</p>
+
+    <ul>
+      <li>An argument list: Zero or more variables separated with commas, usually in parentheses. C#, Java, and Javascript allow omitting parentheses if there is only one argument. C++ requires the arguments to have types, but the other statically typed languages allow it without making it required.</li>
+      <li>A body: Statements to execute or an expression to evaluate and return. When using statements, they are surrounded with braces, and a <code>return</code> statement can be used to return a value. When the body is just an expression, braces are omitted. (C++ only allows using statements and Python only allows using expressions. In C#, braces can be omitted when the body is a single statement.)</li>
+    </ul>
+
+    <hr>
+
+    <p>In the body of the lambda expression, some languages allow both statement blocks and expressions (C#), some only support statements (C++), and some only support expressions (Python). The <code>add_one</code> examples above used expressions as lambda function bodies where possible: <code>x + 1</code> in C#, Python, etc. No braces are used in those languages when the body is an expression:</p>
+
+    <figure>
+    <figcaption>
+      C#/Javascript using an expression body
+    </figcaption>
+    <pre><code class="csharp">
+    x => x + 1
+    </code></pre>
+    </figure>
+
+    <p>The <code>max</code> examples above used statement blocks as lambda function bodies, and when statements are used these languages require that they be surrounded in braces:</p>
+
+    <figure>
+    <figcaption>
+      C#/Javasript using a statement block body
+    </figcaption>
+    <pre><code class="js">
+    (x, y) => {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <p>This last example could be turned into an expression-bodied lambda by using the ternary operator <code>condition ? then : else</code>. Expression bodies are usually easier to read because they are more compact.</p>
+
+    <hr>
+
+    <p>The one thing missing from lambda expressions is a function name. Lambda expressions don&rsquo;t have a place for a name in their syntax.</p>
+
+    <p>(No type is given for the return value in any of the examples above either. It is optional in C++ and not permitted in other languages. In statically typed languages, the lambda expression <em>does</em> have a return type but the compiler figures it out from what you return.)</p>
+
+    
+    <h2>Lambda Expressions are Expressions</h2>
+
+    <p>The key difference between a regularly defined function and a lambda expression is where they occur in source code. Regular functions are normally defined either at the top-level of your source code file or in a class. All of the statements in your source code are contained within a function.</p>
+
+    <p>A lambda expression is exactly the opposite. It occurs not outside of statements but <em>inside</em> statements. It actually <em>is an expression</em>, which means it occurs within statements wherever an expression can be used.</p>
+
+    <h3>Assigning a lambda expression to a variable</h3>
+
+    <p>It can be assigned to a variable. Variable assignment normally looks like this of course:</p>
+
+    <figure>
+    <figcaption>
+      A variable assignment statement in C-family languages
+    </figcaption>
+    <pre><code class="cs">
+    f = 10;
+    </code></pre>
+    </figure>
+
+    <p>(C++ and C# are a statically typed language so the variable must be declared first with its type, but we will omit the variable declaration for now.)</p>
+
+    <p>Now instead of <code>10</code>, the variable will be assigned a lambda expression:</p>
+
+
+    <figure>
+    <figcaption>
+      C++ variable assignment with a lambda expression
+    </figcaption>
+    <pre><code class="cs">
+    f = [](double x, double y) {
+      if (x > y)
+        return x;
+      return y;    
+    };
+    </code></pre>
+    </figure> 
+
+    <figure>
+    <figcaption>
+      C#/Javascript variable assignment with a lambda expression
+    </figcaption>
+    <pre><code class="cs">
+    f = (x, y) => {
+      if (x > y)
+        return x;
+      return y;    
+    };
+    </code></pre>
+    </figure>
+
+    <p>The lambda expression is assigned to the variable <code>f</code>. Note that the <code>f = </code> at the start and the semicolon <code>;</code> at the end <strong>belong to the variable assignment statement</strong>. The lambda expression appears in the middle as the expression. Since the lambda expression is multiple lines, it pushes the semicolon <code>;</code> down a few lines to its end.</p>
+
+    <p>After the variable assignment, the variable actually <em>holds</em> the lambda function defined by the lambda expression.</p>
+
+    <h3>Quick look at the type of lambda expressions in the statically typed languages</h3>
+
+    <p>In statically typed languages the variable <code>f</code> must be declared with the correct type. In C++, the compiler can guess the type so <code>auto</code> can be used:
+
+    <figure>
+    <figcaption>
+      C++ variable assignment with a lambda expression
+    </figcaption>
+    <pre><code class="cpp">
+    auto f = [](double x, double y) {
+      if (x > y)
+        return x;
+      return y;    
+    };
+    </code></pre>
+    </figure>
+
+    <p>You can also use an explicit type. The correct explicit C++ type for this lambda expression is <code>std::function&lt;double(double, double)></code>:</p>
+
+    <figure>
+    <figcaption>
+      C++ variable assignment with a lambda expression and explicit type
+    </figcaption>
+    <pre><code class="cpp">
+    #include &lt;functional>
+
+    using namespace std;
+
+    ...
+
+    function&lt;double(double, double)> f = [](double x, double y) {
+      if (x > y)
+        return x;
+      return y;    
+    };
+    </code></pre>
+    </figure>
+
+    <p>Although C# and Java have the <code>var</code> keyword like C++&rsquo;s <code>auto</code>, it unfortunately cannot be used to guess the type of a lambda expression.</p>
+
+    <p>The hard-to-read C# generic type <code>Func&lt;double, double, double></code> is a correct C# type in this example:</p>
+
+    <figure>
+    <figcaption>
+      C# variable assignment with a lambda expression
+    </figcaption>
+    <pre><code class="cs">
+    Func&lt;double, double, double> f =
+      (x, y) => {
+        if (x > y)
+          return x;
+        return y;    
+      };
+    </code></pre>
+    </figure>
+
+    <p>In Java, a correct type for this example is <code>BinaryOperator&lt;Double></code>:</p>
+
+    <figure>
+    <figcaption>
+      Java variable assignment with a lambda expression
+    </figcaption>
+    <pre><code class="java">
+    import java.util.function.*;
+    ...
+    BinaryOperator&lt;Double> f =
+      (x, y) -> {
+        if (x > y)
+          return x;
+        return y;    
+      };
+    </code></pre>
+    </figure>
+
+    <p>We&rsquo;ll come back to the type of lambda expressions later.</p>
+
+    <p>No type is needed in dynamically typed languages like Javascript and Python.</p>
+
+    
+    <h3>Few meaningful operators are defined for lambda expressions</h3>
+
+    <p>Lambda expressions are expressions, but most operators don&rsquo;t have any meaning with the value that a lambda expression computes. You can&rsquo;t add two lambda functions together with <code>+</code>: It doesn&rsquo;t make sense and that isn&rsquo;t defined in any language.</p>
+
+    <p>The first operator that can be used with lambda expressions are grouping parentheses. Lambda expressions can always be wrapped in parentheses for clarity:</p>
+
+    <figure>
+    <figcaption>
+      C# variable assignment with a lambda expression and parentheses
+    </figcaption>
+    <pre><code class="cs">
+    f = ((x, y) => {
+      if (x > y)
+        return x;
+      return y;    
+    });
+    </code></pre>
+    </figure>
+
+    <p>Be sure you see where the open and closing parens were added here.</p>
+
+    
+    <h3>Calling Lambda Expressions</h3>
+
+    <p>The most important operator that works with lambda functions is the call operator. The next example starts with the same variable assignment as above, but it follows with a new statement that invokes the lambda function by calling it:</p>
+
+    <figure>
+    <figcaption>
+      C# calling a lambda function
+    </figcaption>
+    <pre><code class="cs">
+    Func&lt;double, double, double> f =
+      (x, y) => {
+        if (x > y)
+          return x;
+        return y;    
+      };
+
+    double z = f(10, 20);
+
+    // z holds 20.
+    </code></pre>
+    </figure>
+
+    <p>It is just like calling a function, but instead of <code>f</code> being the name of a function it is the name of a variable <em>holding</em> a lambda function.</p>
+
+    <p>When <code>f(10, 20)</code> is called, control flow moves to the lambda expression. The statements of the lambda expression are evaluated until the <code>return</code> statement is executed. Then control flow moves back the assignment of the value to <code>z</code>.</p>
+
+    <p>Assigning a lambda expression to a variable and then, some time later, using the call operator on the variable is the main thing lambda expressions do.</p>
+
+    <hr>
+
+    <p>Java does not support the call operator &mdash; this is unusual for a language that has lambda expressions. To invoke the lambda function, in this example we use <code>.apply(...)</code> which is the correct method to use with BinaryOperator&lt;Double>. (The method name depends on the runnable interface type that the expression is assigned to.)</p>
+
+    <figure>
+    <figcaption>
+      Java calling a lambda function
+    </figcaption>
+    <pre><code class="cs">
+    import java.util.function.*;
+    ...
+    BinaryOperator&lt;Double> f =
+      (x, y) -> {
+        if (x > y)
+          return x;
+        return y;    
+      };
+
+    double z = f.apply(10.0, 20.0);
+
+    // z holds 20.
+    </code></pre>
+    </figure>
+
+    <hr>
+
+    <p>In the next toy example, <code>f</code> is first set to a lambda expression that computes the maximum value of two arguments and then later it is set to a different lambda expression that computes the minimum value of two arguments. Although the same code <code>f(10, 20)</code> is called identically after each assignment, <code>f</code> returns a different value each time because it executes the two lambda functions:</p>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    double z;
+    Func&lt;double, double, double> f;
+
+    f = (x, y) => {
+      if (x > y)
+        return x;
+      return y;    
+    };
+
+    z = f(10, 20);
+    // z holds 20.
+
+    f = (x, y) => {
+      if (x < y)
+        return x;
+      return y;    
+    };
+
+    z = f(10, 20);
+    // z holds 10!
+    </code></pre>
+    </figure>
+
+    <p>Although <code>f(10, 20)</code> appears twice, it computes a different value each time. In the first call to <code>f</code>, control flow goes to the first lambda expression. In the second call to <code>f</code>, control flow goes to the second lambda expression.</p>
+
+    <hr>
+
+    <p>In some languages, the call operator <code>(10, 20)</code> can occur after <em>any</em> expresson that evaluates to a lambda function. In C++, Javascript, and Python, it can be right after the lambda expression itself:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    auto z = [](double x) { return x + 1; }(10);
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Javascript
+    </figcaption>
+    <pre><code class="js">
+    let z = (x => x + 1)(10);
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="python">
+    z = (lambda x : x + 1)(10)
+    </code></pre>
+    </figure>
+
+    <p>Make sure you see where the lambda expression begins and ends and where the call operator begins and ends.</p>
+
+    <p>This pattern is commonly seen in Javascript for reasons related to scope and not really about the lambda expression. It isn&rsquo;t generally useful because you can always write an expression like this without the complex lambda expression syntax.</p>
+
+    <p>C# and Java do not allow this.</p>
+
+
+    <h3>Passing lambda expressions as arguments to other functions</h3>
+
+    <p>The last meaningful thing that you can do with lambda expressions is passing the lambda expresson as an argument to a function. In the next set of examples, a new function <code>foo</code> is defined that takes one argument. The program calls <code>foo</code> and passes a lambda expression as the argment.</p>
+
+    <figure>
+    <figcaption>
+      C# passing a lambda expression with an expression body to a function
+    </figcaption>
+    <pre><code class="cs">
+    void foo(Func&lt;double, double> f) {
+      ...
+    }
+
+    ...
+
+    foo(x => x + 1);
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java passing a lambda expression with an expression body to a function
+    </figcaption>
+    <pre><code class="cs">
+    import java.util.function.*;
+    
+    ...
+    
+    void foo(UnaryOperator&lt;Double> f) {
+      ...
+    }
+
+    ...
+
+    foo(x -> x + 1);
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Javascript passing a lambda expression with an expression body to a function
+    </figcaption>
+    <pre><code class="cs">
+    function foo(f) {
+      ...
+    }
+
+    ...
+
+    foo(x => x + 1);
+    </code></pre>
+    </figure>
+
+    <p>Here are additional examples using the more complex lambda functions with statement bodies:</p>
+
+    <figure>
+    <figcaption>
+      C++ passing a lambda expression to a function
+    </figcaption>
+    <pre><code class="cpp">
+    #include &lt;functional>
+
+    using namespace std;
+
+    void foo(function&lt;double(double, double)> f) {
+       ...
+    }
+          
+    ...
+    
+    foo( [](double x, double y) {
+      if (x > y)
+        return x;
+      return y;
+    } );
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C# passing a lambda expression to a function
+    </figcaption>
+    <pre><code class="cs">
+    void foo(Func&lt;double, double, double> f) {
+      ...
+    }
+
+    ...
+
+    foo( (x, y) => {
+      if (x > y)
+        return x;
+      return y;
+    } );
+    </code></pre>
+    </figure>
+
+
+    <figure>
+    <figcaption>
+      Javascript passing a lambda expression to a function
+    </figcaption>
+    <pre><code class="js">
+    function foo(f) {
+      ...
+    }
+
+    ...
+    
+    foo( (x, y) => {
+      if (x > y)
+        return x;
+      return y;
+    } );
+    </code></pre>
+    </figure>
+
+    <p>When passing lambda expressions with statement bodies in function calls, the triple of symbols brace-paren-semicolon <code>} );</code> is a common line ending. The close brace belongs to the lambda expression: It is the close-brace that ends the lambda expression&rsquo;s body. The close parenthesis belongs to the function call: It is the close parethesis at the end of the argument list. The semicolon marks the end of the statement as in all C++, C#, Java, and Javascript statements.</p>
+
+
+    <hr>
+
+    <p>The most common way to use a lambda expression is passing it to another function and then calling it within that function. Here is the same function call example again, plus calling the lambda function within <code>foo</code>:</p>
+
+    <figure>
+    <figcaption>
+      C# passing a lambda expression to a function and then calling it
+    </figcaption>
+    <pre><code class="cs">
+    foo( (x, y) => {
+      if (x > y)
+        return x;
+      return y;
+    } );
+
+    ...
+
+    void foo(Func&lt;double, double, double> f) {
+      double z = f(10, 20);
+      // z holds 20.
+    }
+    </code></pre>
+    </figure>
+
+    <hr>
+
+    <p>Finally, we look at a lambda expression with no return value. Lambda expressions without a return value are typically used with statement-block bodies to take an action.</p>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    foo(() => {
+      Console.Out.WriteLine("first lambda");
+    });
+    // prints:
+    //
+    // foo - start
+    // first lambda
+    // foo - end
+
+    foo(() => {
+      Console.Out.WriteLine("second lambda");
+    });
+    // prints:
+    //
+    // foo - start
+    // second lambda
+    // foo - end
+
+    ...
+
+    void foo(Action f) {
+      Console.Out.WriteLine("foo - start");
+      f();
+      Console.Out.WriteLine("foo - start");
+    }
+    </code></pre>
+    </figure>
+
+    <p>This lambda expression has a <code>void</code> return type in C++, C#, and Java. (Javascript and Python do not support void return types &mdash; if there is no return value, the lambda expression returns <code>undefined</code> (Javascript) or <code>None</code> (Python).)</p>
+
+
+    <hr>
+
+    <p>In C++, C#, Java, Javascript, and Python, any regular function name or class method can also be assigned to a variable and passed to a function, like lambda expressions. In the statically typed languages, the variable or function argument must have the right type. But in dynamically typed languages, that&rsquo;s not an issue and passing around functions can be very natural:</p>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    def min(x, y):
+        if x < y:
+            return x
+        return y
+
+    def max(x, y):
+        if x > y:
+            return x
+        return y
+
+    foo(min, 10, 20);
+    # prints 10
+
+    foo(max, 10, 20);
+    # prints 20
+
+    def foo(f, x, y) {
+      f(x, y);
+    }
+    </code></pre>
+    </figure>
+
+
+    <h2>Terminology</h2>
+
+    <p>In this guide, <strong>lambda expression</strong> and <strong>lambda function</strong> mean slightly different things, although I can&rsquo;t promise that anyone else makes this distinction:</p>
+
+    <p>A lambda expression is the code you type to define a short function. It is source code text that goes into the compiler and is recognized with a particular syntax. (In Javascript, technically they are called arrow function expressions/declarations.)</p>
+
+    <p>The expression <em>evaluates</em> at run time to a lambda <em>function</em> in memory. In memory during program execution, the <code>f</code> variable in the preceding examples holds a <em>lambda function</em>. It doesn&rsquo;t hold the source code text that you typed in &mdash; that&rsquo;s been compiled into some other more efficient representation. So it doesn&rsquo;t hold an expression. Instead it probably holds a pointer to a memory location that has the compiled code.</p>
+
+    <p>The difference between a lambda expression and a lambda function is similar to the difference between a class and an <em>instance</em> of the class (an object). A class is a definition of a type of object. At run time, variables whose types are classes don&rsquo;t hold classes: they hold pointers to objects. Similarly, variables that are assigned lambda expressions in code hold pointers to <em>lambda functions</em> at run time, not lambda expressions. (In fact, in many languages the lambda expression actually compiles to a new instance of a hidden class!)</p>
+
+
+    <h2>Standard Library Routines that Use Lambda Functions</h2>
+
+    <p>The standard library in each programming language has some methods that are convenient to use with lambda expressions.</p>
+
+    <h3>C++</h3>
+
+    <p>Across programming languages, lambda functions are commonly used with the language&rsquo;s standard library sort function to create sort orders for user-defined data types. In C++, a lambda expression can be passed to <code>std::sort</code> for this purpose.</p>
+
+    <p><code>std::sort</code>&rsquo;s third argument is a function that compares two items in the list and returns whether the first item should come first. The arguments to the comparison function must be const references.</p>
+
+    <p>In this example, a user-defined class is sorted first by its name field and then, when there are any instances with the same name, by its value field.</p>
+
+    <figure>
+    <figcaption>
+      C++ sorting
+    </figcaption>
+    <pre><code class="cpp">
+    #include &lt;string>
+    #include &lt;vector>
+    #include &lt;algorithm>
+
+    using namespace std;
+
+    class MyClass {
+    public:
+      string name;
+      double value;
+    };
+
+    ...
+
+    vector&lt;MyClass> items;
+
+    ...
+
+    sort(items.begin(), items.end(), [](const MyClass&amp; a, const MyClass&amp; b) {
+      if (a.name &lt; b.name) return true;
+      if (a.name > b.name) return false;
+      return a.value &lt; b.value;
+    });
+    </code></pre>
+    </figure>
+
+    <p><code>std::sort</code> will call the lambda function for each pair of elements in the list and will use its return value to sort the elements according to the order that the lambda function defines. The comparison function always looks something like this to achieve a sort order over multiple fields.</p>
+
+    <hr>
+
+    <p>The standard library has a handful of <a href="https://en.cppreference.com/w/cpp/named_req/Compare">functions that take comparison functions</a> like <code>sort</code> does, including <code>min_element</code>/<code>max_element</code> &mdash; another common use of lambda functions across languages. This example finds the <code>MyClass</code> instance in a vector with the smallest <code>value</code>.</p>
+
+    <figure>
+    <figcaption>
+      C++ min_element
+    </figcaption>
+    <pre><code class="cpp">
+    #include &lt;algorithm>
+
+    ...
+
+    auto iter = min_element(items.begin(), items.end(), [](const MyClass&amp; a, const MyClass&amp; b) {
+      return a.value &lt; b.value;
+    });
+
+    cout &lt;&lt; iter->name;
+    </code></pre>
+    </figure>
+
+    <p>This is more compact than writing a <code>for</code> loop to iterate over the elements and track which one has the minimum value.</p>
+
+    <p>A comparison function can be used to create <code>set</code> and <code>map</code> containers for user-defined data types. (A hash code generator can also be used with <code>unordered_set</code> and <code>unordered_map</code>.)</p>
+
+    <p>You can also put lambda functions inside containers:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    #include &lt;iostream>
+    #include &lt;list>
+    #include &lt;algorithm>
+    #include &lt;functional>
+
+    using namespace std;
+
+    ...
+
+    list&lt;function&lt;void()>> actions;
+    
+    actions.push_back([]() { cout &lt;&lt; "Hello "; });
+    actions.push_back([]() { cout &lt;&lt; "world."; });
+    
+    for_each(actions.begin(), actions.end(), [](function&lt;void()> f) {
+      f();
+    });
+    </code></pre>
+    </figure>
+    
+    <h3>C#</h3>
+
+    <p>Across programming languages, lambda functions are commonly used with the language&rsquo;s container sort functions to create sort orders for user-defined data types. In C#, a lambda expression can be passed to <code>List.Sort(...)</code> for this purpose.</p>
+
+    <p><code>List.Sort()</code>&rsquo;s optional argument is a function that compares two items in the list and returns which should be first in the list. The comparison function returns -1 if the first item should come first, 1 if the second item should come first, or 0 if the items can have either order.</p>
+
+    <p>In this example, a user-defined class is sorted first by its name field and then, when there are any instances with the same name, by its value field.</p>
+
+    <figure>
+    <figcaption>
+      C# sorting
+    </figcaption>
+    <pre><code class="cs">
+    using System.Collections.Generic;
+
+    class MyClass {
+      public string Name;
+      public double Value;
+    };
+
+    ...
+
+    var items = new List&lt;MyClass>();
+
+    ...
+
+    items.Sort((a, b) => {
+      var cmp_name = a.Name.CompareTo(b.Name);
+      if (cmp_name != 0) return cmp_name;
+      return a.Value.CompareTo(b.Value);
+    });
+    </code></pre>
+    </figure>
+
+    <p><code>List.Sort</code> will call the lambda function for each pair of elements in the list and will use its return value to sort the elements according to the order that the lambda function defines.  The comparison function always looks something like this to achieve a sort order over multiple fields. <code>String.CompareTo</code> and <code>Double.CompareTo</code> have the same sematics as the function expected by Sort: They return -1, 0, or 1.</p>
+
+    <p><code>List.ForEach</code> is another helpful method with a lambda expression &mdash; it simply runs the function on each element of the list. Here&rsquo;s how you can print out each item in the list:</p>
+
+    <figure>
+    <figcaption>
+      C# List.ForEach
+    </figcaption>
+    <pre><code class="cs">
+    items.ForEach(a => {
+      Console.WriteLine(a.Name);
+      Console.WriteLine(a.Value);
+    });
+    </code></pre>
+    </figure>
+
+    <p>You could of course also write a regular <code>foreach</code> loop, but the lambda expression syntax might be clearer or cleaner in some cases.</p>
+
+    <p>You can also put lambda functions inside lists:</p>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var actions = new List&lt;Action>();
+
+    actions.Add( () => Console.WriteLine("Hello") );
+    actions.Add( () => Console.WriteLine("world.") );
+
+    actions.ForEach(action => action());
+    </code></pre>
+    </figure>
+
+    <p>The extension methods in <code>System.Linq.Enumerable</code> (<a href="https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-5.0#methods">reference</a>) provide other utility methods on collections that are helpful when used with lambda expressions. For example, <code>Count</code> can be used to count the items in a list that pass a test:</p>
+    
+    <figure>
+    <figcaption>
+      C# Count
+    </figcaption>
+    <pre><code class="cs">
+    using System.Linq;
+
+    ...
+
+    var n = items.Count(item => {
+      return item.Name.Contains("Sharp");
+    });
+    </code></pre>
+    </figure>
+
+    <hr>
+
+    <p><code>System.Threading.Tasks.Task</code> can be used to launch a background task that runs asynchronously on a thread pool and <code>System.Threading.Tasks.Parallel</code> can launch many tasks at once on the thread pool. Lambda expressions are convenient for both.</p>
+
+    <p>First, a single background task:</p>
+
+    <figure>
+    <figcaption>
+      C# Task
+    </figcaption>
+    <pre><code class="cs">
+    using System.Threading.Tasks;
+
+    ...
+
+    // Start a long-running task.
+    var t = Task.Run(
+      () => {
+        // Perform an operation that takes a long time
+        // to complete, simulated with Sleep.
+        System.Threading.Thread.Sleep(10000); // 10s
+        Console.WriteLine("Task finished.");
+      }
+    );
+
+    // Do other things.
+    Console.WriteLine("Doing other things.");
+    
+    // Wait for the task to finish.
+    t.Wait();
+    </code></pre>
+    </figure>
+
+    <p>Next, a background task is launched for each item in an array:</p>
+
+    <figure>
+    <figcaption>
+      C# Task
+    </figcaption>
+    <pre><code class="cs">
+    using System.Threading.Tasks;
+
+    ...
+
+    string[] items = { "These", "are", "some", "items" };
+
+    // Run a lambda expression in parallel on items in a list.
+    Parallel.ForEach(
+      items,
+      (item) => {
+        // Perform an operation that takes a long time
+        // to complete, simulated with Sleep.
+        System.Threading.Thread.Sleep(1000); // 10s
+        Console.WriteLine("Task finished for " + item);
+      }
+    );
+    </code></pre>
+    </figure>
+
+    <p>The lambda expression is run multiple times, possibly simultaneously, for each item in the array, and the order in which the array elements are seen might be unpredictable. The first argument to ForEach can be any <code>IEnumerable</code> container. Unlike <code>Task.Run</code> which returns immediately, <code>Parallel.ForEach</code> waits until all of the loop iterations complete.</p>
+
+    <h3>Java</h3>
+
+    <p>See <a href="https://ddc-java-10.github.io/2020/04/28/lambdas-key-functional-interfaces/">https://ddc-java-10.github.io/2020/04/28/lambdas-key-functional-interfaces/</a> for some examples.</p>
+
+    <h3>Javascript</h3>
+
+    <p>TBD</p>
+
+    <h3>Python</h3>
+
+    <p>TBD</p>
+
+
+    <h2>Variable Capture</h2>
+
+    <p>Besides a lambda expression&rsquo;s arguments, a lambda expression can also access variables of the outer function that the lambda expression is contained within. This is called capture or closure.</p>
+
+    <p>For example:</p>
+
+    <figure>
+    <figcaption>
+      C++ capture
+    </figcaption>
+    <pre><code class="cpp">
+    auto text = "Hello";
+    
+    auto f = [&]() {
+      cout << text << endl;
+    };
+    
+    f(); // prints "Hello"
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var text = "Hello";
+ 
+    Action f = () => {
+      Console.WriteLine(text);
+    };
+ 
+    f(); // prints "Hello"
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java
+    </figcaption>
+    <pre><code class="java">
+    String text = "Hello";
+    
+    Runnable f = () -> {
+      System.out.println(text);
+    };
+    
+    f.run(); // prints "Hello"
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = "Hello"
+
+    f = lambda : print(text)
+
+    f() # prints "Hello"
+    </code></pre>
+    </figure>
+
+    <p>In the above examples the captured variable is <code>text</code>. You can tell because it is a variable in the lambda expression that is not an argument (in these examples there are no arguments). The variable type is simply a string, but any data type including objects or other lambda functions can be captured:</p>
+
+    <figure>
+    <figcaption>
+      C++ capture
+    </figcaption>
+    <pre><code class="cpp">
+    vector&lt;string> text;
+    
+    auto f = [&](string word) {
+      text.push_back(word);
+    };
+    
+    f("Hello");
+    f("world.");
+
+    // text holds { "Hello", "world." }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var text = new List&lt;string>();
+ 
+    Action&lt;string> f = (word) => {
+      text.Add(word);
+    };
+ 
+    f("Hello");
+    f("world.");
+
+    // text holds { "Hello", "world." }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Java
+    </figcaption>
+    <pre><code class="java">
+    import java.util.*;
+    import java.util.function.*;
+
+    ...
+
+    List&lt;String> text = new ArrayList&lt;String>();    
+ 
+    Consumer&lt;String> f = (word) -> {
+      text.add(word);
+    };
+ 
+    f.accept("Hello");
+    f.accept("world.");
+
+    // text holds { "Hello", "world." }
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = []
+
+    f = lambda word : text.append(word)
+
+    f("Hello")
+    f("world")
+
+    # text holds ["Hello", "world"]
+    </code></pre>
+    </figure>    
+
+    <p>If the variable holds an object, that object remains valid &mdash; it won&rsquo;t be garbage-collected or destroyed &mdash; until the outer function exits <em>and</em> the lambda function is no longer referenced anywhere.</p>
+
+    <hr>
+
+    <p>Lambda expressions are typically small, reusable, and self-contained, but capture makes lambda expressions less reusable and not self-contained, so excessive use of capture should be avoided.</p>
+
+    <p>How this works varies subtly across languages, and there are three types of variable capture that you need to be aware of.</p>
+
+
+    <h3>Capture by Reference</h3>
+
+    <p>Capture <em>by reference</em> means that the outer variable is shared with the lambda expression.</p>
+
+    <p>If the outer variable changes after the lambda expression is defined but before the lambda function is <em>executed</em>, the lambda function will get the updated value:</p>
+
+    <figure>
+    <figcaption>
+      C++ capture by reference
+    </figcaption>
+    <pre><code class="cpp">
+    auto text = "Hello";
+    
+    auto f = [&]() {
+        cout << text << endl;
+    };
+
+    f(); // prints "Hello"
+
+    text = "world.";
+    
+    f(); // prints "world."
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var text = "Hello";
+ 
+    Action f = () => {
+      Console.WriteLine(text);
+    };
+
+    f(); // prints "Hello"
+
+    text = "world.";
+ 
+    f(); // prints "world."
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Javascript
+    </figcaption>
+    <pre><code class="js">
+    let text = "Hello";
+     
+    f = () => { console.log(text) };
+
+    f(); // prints "Hello"
+     
+    text = "world.";
+     
+    f(); // prints "world."
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = "Hello"
+
+    f = lambda : print(text)
+    
+    f() // prints "Hello"
+
+    text = "world."
+
+    f() # prints "world"
+    </code></pre>
+    </figure>
+
+    <p>Conversely, the lambda expression can change the value of the outer variable so that when the lambda function finishes, the outer function sees the updated value:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    auto text = "Hello";
+    
+    auto f = [&]() {
+        text = "world.";
+    };
+    
+    cout << text << endl; // prints "Hello"
+
+    f();
+    
+    cout << text << endl; // prints "world."
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var text = "Hello";
+
+    Action f = () => {
+      text = "world.";
+    };
+ 
+    Console.WriteLine(text); // prints "Hello"
+
+    f();
+
+    Console.WriteLine(text); // prints "world."
+    </code></pre>
+    </figure>
+
+    <figure>
+    <figcaption>
+      Javascript
+    </figcaption>
+    <pre><code class="js">
+    let text = "Hello";
+     
+    f = () => { text = "world." };
+     
+    f();
+
+    console.log(text); // prints "world."
+    </code></pre>
+    </figure>
+
+    <p>(This is not possible in Python: See the language-specific notes at the end.)
+    
+    <hr>
+
+    <p>Here&rsquo;s a complex case. Can you figure out what will be printed?</p>
+
+    <figure>
+    <figcaption>
+      C#
+    </figcaption>
+    <pre><code class="cs">
+    var text = new string[] { "Hello", "world." };
+
+    var actions = new List&lt;Action>();
+    
+    foreach (var t in text) {
+      actions.Add( () => {
+        Console.WriteLine(t);
+      } );
+    }
+
+    text = new string[] { "Goodbye", "world." };
+    
+    actions.ForEach(action => action());
+    </code></pre>
+    </figure>
+
+    <hr>
+
+    <p>In C#, Javascript, and Python, capture is always by reference.</p>
+
+    <p>In C++, there is no capture by default. To enable capture by reference, the <code>&amp;</code> symbol can be put in the brackets that start the lambda expression. The brackets are for declaring capture.</p>
+
+    <p>When inside non-static methods of a class, the <code>this</code> variable is captured automatically in C#, Java, and Javascript and can be captured by value by adding <code>this</code> to the brackets in C++. That makes all of the current class instance&rsquo;s fields, properties, methods, etc. available within the lambda expression as well.</p>
+
+    <p>In Python and Javascript, the capture rules apply to local function definitions the same as it does to lambda expressions. For example:</p>
+
+    <figure>
+    <figcaption>
+      Python local function capture
+    </figcaption>
+    <pre><code class="py">
+    text = "Hello"
+
+    def f():
+        print(text)
+        
+    text = "world."
+
+    f() # prints "world"
+    </code></pre>
+    </figure>
+
+    <p>In Javascript, use the newer <code>let</code> keyword rather than <code>var</code> to declare variables to avoid for-loop scope mistakes.</p>
+
+
+    <h3>Caveats and Capture by Value</h3>
+
+    <p>It can become very difficult to track what captured variables will hold inside lambda expressions when the variable&rsquo;s value changes, like in some of the examples in the previous section! It is especially hard in some specific cases:</p>
+
+    <ul>
+      <li>When the variable&rsquo;s value changes between the lambda expression&rsquo;s definition and its invocation.</li>
+      <li>Capturing <code>for</code>-loop variables and variables within loops because their value may change on every iteration &mdash; in fact, they may be considered <em>different variables</em> on each iteration, which may or may not be what you expect.</li>
+      <li>When lambda functions are executed asynchronously, as is often the case in Javascript, because the order of execution is opposite to the source code order and may be unpredictable.</li>
+    </ul>
+
+    <p><strong>Avoid using capture by reference in these circumstances whenever possible.</strong> especially capturing <code>for</code>-loop variables and variables within loops.</p>
+
+    <p>Modifying the captured variable either inside or outside the lambda expression is not possible in Java, which requires that captured variables be <code>final</code> or assigned once, so that it only ever has one value. That&rsquo;s nice! It prevents complex situations that are prone to error. Since the captured variable cannot be changed, capture by reference is probably not the right term: capture by value might be a more appropriate term.</p>
+
+    <p>To get around these issues in all of the languages, you can sometimes make the captured variable a container (e.g. a list) and modify what is inside the container. Although the <em>variable</em> should not (or in Java cannot) be assigned a new value, its methods can be called and its fields and properties <em>can</em> be modified freely.</p>
+
+
+    <h3>Capture by Copy (C++)</h3>
+
+    <p>Capture by copy means the lambda function gets a copy of the value in the capture variable at the time the lambda expression is <em>defined</em>. It cannot modify the outer variable and does not see changes to the outer variable.</p>
+
+    <p>In C++, capture can be either by reference or by copy. Using <code>=</code> in the capture brackets, capture is by copy.</p>
+
+    <figure>
+    <figcaption>
+      C++ capture by copy
+    </figcaption>
+    <pre><code class="cpp">
+    auto text = "Hello";
+    
+    auto f = [=]() {
+        text = "world."; // compiler error!
+    };
+
+    ...
+    </code></pre>
+    </figure>
+
+    <p>Because a copy is made at the point where the lambda expression is declared, it will not see subsequent changes to the variable:</p>
+
+    <figure>
+    <figcaption>
+      C++
+    </figcaption>
+    <pre><code class="cpp">
+    auto text = "Hello";
+    
+    auto f = [=]() {
+        cout << text << endl;
+    };
+
+    text = "world.";
+    
+    f(); // prints "Hello"
+    </code></pre>
+    </figure>
+
+    <p>Variables captured by copy are <code>const</code> inside the lambda expression to prevent confusion about which variable is being edited:</p>
+
+    <figure>
+    <figcaption>
+      C++ capture
+    </figcaption>
+    <pre><code class="cpp">
+    vector&lt;string> text;
+    
+    auto f = [=](string word) {
+      text.push_back(word); // compiler error!
+    };
+    </code></pre>
+    </figure>
+
+    <p>Capture by copy is less prone to coding mistakes than capture by reference so it should be preferred, but it may come at a cost if the variable holds a complex data type that is expensive to copy.</p>
+
+    <p>Capture by copy should generally be used when capturing <code>std::shared_ptr</code> or other smart pointers because the copy will ensure the target object is not destroyed before the lambda function finishes. If that&rsquo;s not a concern, capture by reference may be more efficient.</p>
+
+    <p>(In C#, Java, Javascript, and Python capture is always by reference (or by value in Java), so this section on capture by copy does not apply to those languages.)</p>
+
+
+    <h2>The Type of Lambda Expressions</h2>
+
+    <p>If you are writing your own functions that take lambda functions as arguments in statically typed languages, you will need to know the correct types to use.</p>
+
+    <h3>C++</h3>
+
+    <p>The type for lambda functions in C++ is <code>std::function&lt;return_type(arg_type_1, arg_type_2, ...)></code> which is defined in the <code>functional</code> standard header.</p>
+
+    <p>The template argument <code>return_type(arg_type_1, arg_type_2, ...)</code> is a little unusual, but it makes sense and pretty clearly indicates what&rsquo;s what.</p>
+
+    <h3>C#</h3>
+
+    <p>Three types in C# are generally used with lambda expressions.</p>
+
+    <p><code>System.Action</code> is the usual type for lambda functions that do not return anything (like a <code>void</code> return type function). Without any generic arguments, it is the type for lambda functions that take no arguments and have no return value.</p>
+
+    <p>When <code>System.Action</code> has generic arguments, they are the lambda function&rsquo;s argument types. For example, <code>Action&lt;string></code> is the type of a lambda function that takes a string and performs an action without returning a value. <code>Action&lt;string,Object></code> is the type of a lambda function that takes a string and an object as arguments (in that order) and performs an action without returning a value.</p></p>
+
+    <p><code>System.Func</code> is the usual type for lambda functions that have a return value. The first (zero or more) generic arguments are the argument types. The last generic argument is always the type of the return value of the lambda function. So, for example, <code>Func&lt;string></code> is the type of a lambda function that takes no arguments and returns a string. <code>Func&lt;Object,string,int></code> is the type of a lambda function that takes an object and a string as arguments (in that order) and returns integer.</p>
+
+    <p><code>System.Predicate</code> is a special case of <code>Func</code> where the return type is <code>bool</code>. So, for example, <code>Predicate&lt;string></code> is the type of a lambda function that takes a string argument and returns a boolean. <code>Predicate&lt;Object,string,int></code> is the type of a lambda function that takes those three argument types and returns a <code>bool</code>.</p>
+
+    <p>These types are used throughout the built-in .NET assemblies.</p>
+
+    <p>Actually any delegate type can be the type of a lambda expression, but there is no practical reason to use any type other than the three above unless the length of the names of these types becomes too cumbersome to type or read in the source code.</p>
+
+    <p>The <code>var</code> keyword can never be used with lambda expressions. You must always give a full type.</p>
+    
+    <h3>Java</h3>
+
+    <p>In Java, there is no fixed type that must be used with a lambda expression. The pre-defined interface classes in <code>java.util.function</code> (<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">reference</a>) define some commonly used types, such as <code>Function&lt;T,R></code> which can be assigned a lambda function that takes a <code>T</code> as an argument and returns an <code>R</code>-type value. The <code>Runnable</code> (<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html">reference</a>) interface can be used for lambda expressions that take no arguments and return nothing.</p>
+
+    <p>Any interface with a single method (a functional interface type) can be the type of a lambda expression, so long as the method has the same return type and arguments as the lambda expression. See <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-15.html#jls-15.27.3">the language reference</a>.</p>
+
+    <p>Unfortunately, to invoke the lambda function, you must know the name of the method in the particular functional interface that is being used. Consult the interface documentation for the name of the method used to invoke the lambda function.</p>
+
+    <h3>Dynamically Typed Languages</h3>
+
+    <p>Although dynamically typed languages like Javascript and Python still have types <em>at runtime</em>, the types are generally not specified in source code.</p>
+    
+
+    <h2>Metaprogramming</h2>
+
+    <p>In C#, lambda expressions can be used for metaprogramming. See    <a href="https://docs.microsoft.com/en-us/dotnet/api/system.linq.expressions.expression?view=net-5.0">System.Linq.Expressions.Expression</a>.</p>
+
+    <h2>Language-Specific Notes</h2>
+
+    <h3>C++</h3>
+
+    <p>In C++, capture can also be explicit: The brackets can contain a comma-separated list of variables to capture. Variables not mentioned in the list are not captured and not available to the lambda expression. Capture is by copy by default, unless the variable name is preceded with <code>&amp;</code>. The <code>this</code> variable can also be listed when in a non-static class member function, and it is always captured by reference. (<a href="https://en.cppreference.com/w/cpp/language/lambda#Lambda_capture">refreence</a>)</p>
+
+    <h3>C#</h3>
+
+    <p>Use <code>_</code> as the name of lambda expression arguments to indicate they are not used, rather than dummy1, dummy2, etc. <code>_</code> is a <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/lambda-discard-parameters">lambda discard parameter</a> when it is the name of more than one argument.</p>
+
+    <p>Capture can be turned off <em>to avoid accidental capture</em> or if you want to have a variable the same name as a variable in the outer scope by placing the <code>static</code> keyword immediately before the lambda expression.</p>
+
+    <p>Lambda expressions can use <code>async</code>.</p>
+
+    <h3>Java</h3>
+
+    <p>Nothing yet.</p>
+
+    <h3>Javascript</h3>
+
+    <p>As noted earlier, the capture rules apply to local function definitions the same as they do with lambda expressions.</p>
+
+    <h3>Python</h3>
+
+    <p>As noted earlier, the capture rules apply to local function definitions the same as they do with lambda expressions.</p>
+
+    <hr>
+
+    <p>Because Python variable scope is determined by the nearest assignment, variables in the outer scope cannot be assigned to:</p>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = "Hello"
+
+    def f():
+        text = "world."
+        
+    f()
+
+    print(text) # prints "Hello"
+    </code></pre>
+    </figure>
+
+    <p>The <code>text</code> variable in the inner function is a <em>different</em> variable than the one in the outer funtion because there is an assignment to <code>text</code> in the inner function. A trick is to make the outer variable a contaier:</p>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = [ "Hello" ]
+
+    def f():
+        text[0] = "world."
+        
+    f()
+
+    print(text[0]) # prints "world."
+    </code></pre>
+    </figure>    
+
+
+    <p>Although Python capture is always by reference, there is a trick for achieving capture by value: assigning default values to lambda expression arguments.</p>
+
+    <figure>
+    <figcaption>
+      Python
+    </figcaption>
+    <pre><code class="py">
+    text = "Hello"
+    
+    f = lambda text=text: print(text)
+
+    text = "world.";
+    
+    f() # prints "Hello"
+    </code></pre>
+    </figure>
+
+    <p>It&rsquo;s a weird and neat trick.</p>
+
+    <h2>References</h2>
+
+    <ul>
+        <li>C++: <a href="https://en.cppreference.com/w/cpp/language/lambda">Lambda expressions</a></li>
+        <li>C#: <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions">Lambda expression</a></li>
+        <li>Java: <a href="https://docs.oracle.com/javase/specs/jls/se15/html/jls-15.html#jls-15.27">Lambda expressions</a></li>
+        <li>Javascript: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow function expressions/definitions</li></a></li>
+        <li>Python: <a href="https://docs.python.org/3/reference/expressions.html#grammar-token-lambda-expr">Lambda expressions</a></li>
+    </ul>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          // Remove leading and trailing newline so we don't have to worry about
+          // newlines at the start of the block, and remove any common indentation.
+          if (block.firstChild && block.firstChild.nodeValue) {
+            var code = block.firstChild.nodeValue;
+            code = code.replace(/^\n+/, ''); // leading newlines
+            code = code.replace(/\n+\s*$/, ''); // trailing newline + whitespace
+
+            // Find largest common indentation in all lines and remove it from
+            // all of the lines. Skip lines that only contain whitespace.
+            var lines = code.split("\n");
+            var maxIndent = null;
+            lines.forEach(line => {
+              if (!/\S/.test(line)) return;
+              var indent = /^\s*/.exec(line)[0];
+              if (maxIndent == null) {
+                maxIndent = indent;
+              } else {
+                var p = 0;
+                while (p < maxIndent.length && p < line.length && maxIndent.charAt(p) == line.charAt(p))
+                  p++;
+                maxIndent = maxIndent.substr(0, p);
+              }
+            });
+            lines = lines.map(line => line.substr(maxIndent.length));
+            code = lines.join("\n");
+            
+            block.firstChild.nodeValue = code;
+          }
+
+          hljs.highlightBlock(block);
+        });
+    });
+  </script>
+
+  </body>
+</html>
