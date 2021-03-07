@@ -139,6 +139,7 @@
             // Hook up draw events.
             var mousePressed = false;
             var polygon = null;
+            var polygonProperties = null;
             var velocity = [];
             function add_point(e) {
                 if (e.touches)
@@ -186,6 +187,8 @@
                 }
                 if (polygon.length > 0) // make first and last point the same
                     polygon.push(polygon[0]);
+
+                // Reset the velocity vector.
                 velocity = [0, 0, 0];
 
                 // People like to draw shapes with kinks, which results
@@ -233,8 +236,18 @@
 
                 // Make the polygon defined in a consistent clockwise/counter-clockwise
                 // order to simplify the computation of the fun drag effect.
-                if (signedPolygonArea(polygon) < 0)
+                polygonProperties = {
+                  area: signedPolygonArea(polygon),
+                };
+                if (polygonProperties.area < 0) {
                     polygon = polygon.reverse();
+                    polygonProperties.area = Math.abs(polygonProperties.area);
+                }
+
+                // Calculate the polygon's angular mass, normalized to
+                // the polygon area because it plays nicer when the
+                // math is size-independent.
+                polygonProperties.rotationalInertia = polygonMomentOfInertia(polygon) / polygonProperties.area**.5 / 1000000;
             });
 
 
@@ -245,8 +258,14 @@
             tick_repeat();
 
             function tick() {
-                if (!polygon || polygon.length < 4 || mousePressed)
+                if (!polygon || polygon.length < 4 || mousePressed
+                   || !polygonProperties)
                     return;
+
+                // Compute the force on centroid of the iceberg polygon
+                // at this time instant. The polygon has three degrees
+                // of freedom: x, y, and rotation.
+                var force = [0, 0, 0];
 
                 // Compute the center of mass of the iceberg and the
                 // center of mass of the submerged portion.
@@ -263,9 +282,9 @@
                 // portion.
                 var specific_gravity = .85;
                 var fg = 1;
-                var submerged_ratio = polygonArea(polygon_submerged) / polygonArea(polygon);
+                var submerged_ratio = polygonArea(polygon_submerged) / polygonProperties.area;
                 var fb = submerged_ratio / specific_gravity;
-                var fy = fg - fb;
+                force[1] += fg - fb;
 
                 // In reality, the 3D distribution of mass is not uniform
                 // across the 2D projection of the iceberg that we are looking
@@ -286,9 +305,7 @@
                 // the eccentricity between the iceberg centroid and the
                 // centroid of the submerged portion where the bouyant
                 // force acts.
-                var mz = fb * (pc_submerged[0] - pc[0]);
-
-                var fx = 0;
+                force[2] += fb * (pc_submerged[0] - pc[0]);
 
                 // Apply some drag. This may not be totally scientifically valid.
                 // For each line segment on the perimeter of the polygon that is
@@ -341,15 +358,15 @@
                     // Apply to the force vector. Skip Fy because we
                     // don't want actual drag --- we handle that by
                     // damping.
-                    fx += f[0];
-                    //fy += f[1];
+                    force[0] += f[0];
+                    //force[1] += f[1];
 
                     // Transform the force from the center of the segment
                     // to the centroid. Limit the applied moment.
                     var p = [(p0[0] + p1[0])/2, (p0[1] + p1[1])/2];
                     m = f[0] * (p[1] - pc[1]) - f[1] * (p[0] - pc[0]);
-                    if (Math.abs(m) > 2) m = Math.sign(m) * 2;
-                    mz += m;
+                    if (Math.abs(m) > 1) m = Math.sign(m) * 1;
+                    force[2] += m;
                 });
 
                 // If the polygon is out of the horizontal bounds, push it in.
@@ -358,15 +375,16 @@
                     if (pt[0] < minx) minx = pt[0];
                     if (pt[0] > maxx) maxx = pt[0];
                 });
-                if (minx < 0) fx += -minx/ctx.canvas.width * 10;
-                if (maxx > ctx.canvas.width) fx += (ctx.canvas.width-maxx)/ctx.canvas.width * 10;
+                if (minx < 0) force[0] += -minx/ctx.canvas.width * 10;
+                if (maxx > ctx.canvas.width) force[0] += (ctx.canvas.width-maxx)/ctx.canvas.width * 10;
 
-                // The force is normalized to the polygon area so we can
-                // consider it an acceleration. Increment the velocity
-                // with the acceleration.
-                velocity[0] += fx;
-                velocity[1] += fy;
-                velocity[2] += mz / 30;
+                // The translational force is normalized to the polygon area so we can
+                // consider it an acceleration. Increment the velocity with the acceleration.
+                velocity[0] += force[0];
+                velocity[1] += force[1];
+
+                // But the rotational force must be divided by the polygon's angular mass.
+                velocity[2] += force[2] / polygonProperties.rotationalInertia;
 
                 // Apply damping. There is more damping in water than in air.
                 // Lowering the damping in air boosts the free-fall a bit for
@@ -469,6 +487,75 @@
                 ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
             return [nx, ny];
         }
+
+        function polygonMomentOfInertia(points) {
+          // Thanks to https://fotino.me/moment-of-inertia-algorithm/.
+          function sub(p1, p2) {
+            return [p1[0] - p2[0], p1[1] - p2[1]];
+          }
+          function add(p1, p2) {
+            return [p1[0] + p2[0], p1[1] + p2[1]];
+          }
+          function mul(p, f) {
+            return [p[0] * f, p[1] * f];
+          }
+          function dot(p1, p2) {
+            return p1[0] * p2[0] + p1[1] * p2[1];
+          }
+          function cross(p1, p2) {
+            return p1[0] * p2[1] - p2[0] * p1[1];
+          }
+          function dist(p1, p2) {
+            p2 = p2 || [0, 0];
+            const x = p1[0] - p2[0], y = p1[1] - p2[1];
+            return Math.sqrt(x * x + y * y);
+          }
+          let momentOfInertia = 0;
+          for (let i = 1; i < points.length - 1; i++) {
+            const p1 = points[0], p2 = points[i], p3 = points[i + 1];
+            
+            const w = dist(p1, p2);
+            const w1 = Math.abs(dot(sub(p1, p2), sub(p3, p2)) / w);
+            const w2 = Math.abs(w - w1);
+            
+            const signedTriArea = cross(sub(p3, p1), sub(p2, p1)) / 2;
+            const h = 2 * Math.abs(signedTriArea) / w;
+            
+            const p4 = add(p2, mul(sub(p1, p2), w1 / w));
+            
+            const cm1 = [
+              (p2[0] + p3[0] + p4[0]) / 3,
+              (p2[1] + p3[1] + p4[1]) / 3
+            ];
+            const cm2 = [
+              (p1[0] + p3[0] + p4[0]) / 3,
+              (p1[1] + p3[1] + p4[1]) / 3
+            ];
+            
+            const I1 = w1 * h * ((h * h / 4) + (w1 * w1 / 12));
+            const I2 = w2 * h * ((h * h / 4) + (w2 * w2 / 12));
+            const m1 = 0.5 * w1 * h;
+            const m2 = 0.5 * w2 * h;
+
+            const I1cm = I1 - (m1 * Math.pow(dist(cm1, p3), 2));
+            const I2cm = I2 - (m2 * Math.pow(dist(cm2, p3), 2));
+            
+            const momentOfInertiaPart1 = I1cm + (m1 * Math.pow(dist(cm1), 2));
+            const momentOfInertiaPart2 = I2cm + (m2 * Math.pow(dist(cm2), 2));
+            if (cross(sub(p1, p3), sub(p4, p3)) > 0) {
+              momentOfInertia += momentOfInertiaPart1;
+            } else {
+              momentOfInertia -= momentOfInertiaPart1;
+            }
+            if (cross(sub(p4, p3), sub(p2, p3)) > 0) {
+              momentOfInertia += momentOfInertiaPart2;
+            } else {
+              momentOfInertia -= momentOfInertiaPart2;
+            }
+          }
+          return Math.abs(momentOfInertia);
+        }                
+
     </script>
 
   </body>
