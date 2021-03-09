@@ -88,7 +88,7 @@
 
     <p>A <strong>lambda expression</strong> is a convenient syntax available in many programming languages for writing short functions. Lambda expressions do for functions what object-oriented programing does for objects: It makes a function something you can assign to a variable.</p>
 
-    <p>Lambda expressions are also called anonymous functions, lambda functions, and closures. The capabilities of lambda expressions differs across programming languages, and some programming languages have multiple ways of writing lambda expressions. The concept originates in philosophy.</p>
+    <p>Lambda expressions are also sometimes called anonymous functions, lambda functions, and closures. The capabilities of lambda expressions differs across programming languages, and some programming languages have multiple ways of writing lambda expressions. The concept originates in philosophy.</p>
 
 
     <h2>Background Concepts</h2>
@@ -111,6 +111,7 @@
         <li><strong>Statically typed</strong> languages, meaning all variables are defined with a type in source code that is known to the compiler. C, C++, C#, and Java are statically typed languages using types such as <code>int</code>, <code>double</code>, <code>string</code>, etc.</li>
         <li><strong>Dynamically typed</strong> languages, meaning any variable can hold any type of value. Variable declarations with types do not occur in these languages. Python and Javascript are dynamically typed. These languages still have types, usually the same types as in the C-family languages, but they&rsquo;re only for the values computed in memory, not for variables in source code.</li>
     </ul>
+
 
     <h2>Lambda Syntax</h2>
 
@@ -189,7 +190,7 @@
     </code></pre>
     </figure>
 
-    <p>C#, Java, and Javascript use an arrow symbol (made up of an equal sign or dash plus a greater than sign) to separate the arguments from the expression body. The C# and Javascript syntaxes happen to be identical in this case.</p>
+    <p>C#, Java, and Javascript use an arrow symbol (made up of an equal sign or dash plus a greater than sign) to separate the arguments from the expression body. The C# and Javascript syntaxes happen to be identical in this case. (In Javascript, an &ldquo;anonymous function&rdquo; refers to a different but related syntactic structure &mdash; the technical name for the structure discussed here is the arrow function expression.)</p>
 
     <p>In the academic discipline of philosophy, the function would be written with the Greek lowercase letter lambda λ denoting the start of a lambda expression:</p>
 
@@ -254,23 +255,6 @@
     }
     </code></pre>
     </figure>
-
-    <p>Javascript has a longer alternative syntax that looks like this:</p>
-
-    <figure>
-    <figcaption>
-      Javascript alternate syntax
-    </figcaption>
-    <pre><code class="js">
-    function(x, y) {
-      if (x > y)
-        return x;
-      return y;    
-    }
-    </code></pre>
-    </figure>
-
-    <p>It&rsquo;s equivalent and was available in earlier versions of Javascript before lambda expressions were added.</p>
 
     <hr>
 
@@ -977,6 +961,7 @@
     });
     </code></pre>
     </figure>
+
     
     <h3>C#</h3>
 
@@ -1057,11 +1042,45 @@
 
     ...
 
-    var n = items.Count(item => {
-      return item.Name.Contains("Sharp");
-    });
+    var n = items.Count(item => item.Name.Contains("Sharp"));
     </code></pre>
     </figure>
+
+    <hr>
+
+    <p>Lambda expressions are also commonly used with C# events, such as in System.Windows.Forms applications.</p>
+
+    <p>Rather than subscribing methods to event handlers (which are often hooked up by the Visual Studio designer automatically):</p>
+
+    <figure>
+    <figcaption>
+      C# subscribing to an event the old way
+    </figcaption>
+    <pre><code class="cs">
+    button1.Click += button1_Click;
+
+    ...
+
+    void button1_Click(object sender, EventArgs e) {
+      // do something here
+    }
+    </code></pre>
+    </figure>
+
+    <p>A lambda expression could be used instead:</p>
+
+    <figure>
+    <figcaption>
+      C# subscribing to an event with a lambda expression
+    </figcaption>
+    <pre><code class="cs">
+    button1.Click += (sender, eventArgs) {
+      // do something here
+    };
+    </code></pre>
+    </figure>
+
+    <p>Don&rsquo;t subscribe to events directly with lambda expressions if the event handler (the lambda function) needs to be unsubscribed from the event later. To do that, you would need to assign the lambda expression to a variable first and then later use the variable to unsubscribe from the event.</p>
 
     <hr>
 
@@ -1128,13 +1147,58 @@
 
     <p>See <a href="https://ddc-java-10.github.io/2020/04/28/lambdas-key-functional-interfaces/">https://ddc-java-10.github.io/2020/04/28/lambdas-key-functional-interfaces/</a> for some examples.</p>
 
+
     <h3>Javascript</h3>
 
-    <p>TBD</p>
+    <p>Lambda expressions and anonymous functions are used extensively in Javascript, in two ways:</p>
+
+    <ul>
+    <li>When a lambda expression (let&rsquo;s call it L) is passed as an argument to a function (let&rsquo;s call it F) and the lambda L is executed by function F immediately, before the function F returns, the call to the lambda L is <strong>synchronous</strong>. All of the Javascript examples in this guide so far have been synchronous.</li>
+
+    <li>When the function F stores the lambda L to be called later, so that F can return before L is executed, the call to the lambda L is <strong>asynchronous</strong>. It often happens after other stored lambda functions are executed, creating a sort of concurrent execution of multiple tasks. An asynchronously executed lambda expression is often called a &ldquo;callback.&rdquo;</li>
+    </ul>
+
+    <p>Asynchronous callbacks are so pervasive in Javascript that I can&rsquo;t even begin here to provide key examples. The <a href="https://www.npmjs.com/package/async">async</a> package and the Promise design concept are the key places to look next.</p>
+
 
     <h3>Python</h3>
 
-    <p>TBD</p>
+    <p>Across programming languages, lambda functions are commonly used with the language&rsquo;s list sorting function to create sort orders for user-defined classes for which the language doesn&rsquo;t provide any built-in ordering. In Python, a lambda expression can be passed to <code>list.sort()</code> and <code>sorted(...)</code> for this purpose.</p>
+
+    <p>You might have seen this error when trying to sort user-defined classes:</p>
+
+    <figure>
+    <figcaption>
+      Python sorting error
+    </figcaption>
+    <pre><code class="py">
+    items = [ MyClass("A", 1.0), MyClass("B", 0.5) ]
+    items.sort()
+
+    TypeError: '&lt;' not supported between instances
+    of 'MyClass' and 'MyClass'
+    </code></pre>
+    </figure>    
+
+    <p><code>MyClass</code>, in this example, is not a sortable data type. You could implement the <code>&lt;</code> operator on MyClass to make it sortable, but often the easier solution is to call <code>list.sort</code> with a lambda expression.</p>
+
+    <p><code>list.sort()</code>&rsquo;s optional keyword argument <code>key</code> takes a function that <em>takes an item of the list and returns a sortable value to use in place of the item</em>. It can return anything sortable (a number, string, etc.). The items in the list will be sorted according to how their correponding return values from the key function would be sorted amongst each other.</p>
+
+    <p>Returning a tuple of sortable values is a convenient way to create a function that sorts on multiple fields. In this example, the user-defined class is sorted first by its name field and then, when there are any instances with the same name, by its value field.</p>
+
+    <figure>
+    <figcaption>
+      Python sorting with a lambda
+    </figcaption>
+    <pre><code class="py">
+    items = [ MyClass("A", 1.0), MyClass("B", 0.5) ]
+    items.sort(key = lambda item : (
+      item.name,
+      item.value
+    ))
+    </code></pre>
+    </figure>   
+
 
 
     <h2>Variable Capture</h2>
@@ -1476,23 +1540,6 @@
     <p>In Javascript, use the newer <code>let</code> keyword rather than <code>var</code> to declare variables to avoid for-loop scope mistakes.</p>
 
 
-    <h3>Caveats and Capture by Value</h3>
-
-    <p>It can become very difficult to track what captured variables will hold inside lambda expressions when the variable&rsquo;s value changes, like in some of the examples in the previous section! It is especially hard in some specific cases:</p>
-
-    <ul>
-      <li>When the variable&rsquo;s value changes between the lambda expression&rsquo;s definition and its invocation.</li>
-      <li>Capturing <code>for</code>-loop variables and variables within loops because their value may change on every iteration &mdash; in fact, they may be considered <em>different variables</em> on each iteration, which may or may not be what you expect.</li>
-      <li>When lambda functions are executed asynchronously, as is often the case in Javascript, because the order of execution is opposite to the source code order and may be unpredictable.</li>
-    </ul>
-
-    <p><strong>Avoid using capture by reference in these circumstances whenever possible.</strong> especially capturing <code>for</code>-loop variables and variables within loops.</p>
-
-    <p>Modifying the captured variable either inside or outside the lambda expression is not possible in Java, which requires that captured variables be <code>final</code> or assigned once, so that it only ever has one value. That&rsquo;s nice! It prevents complex situations that are prone to error. Since the captured variable cannot be changed, capture by reference is probably not the right term: capture by value might be a more appropriate term.</p>
-
-    <p>To get around these issues in all of the languages, you can sometimes make the captured variable a container (e.g. a list) and modify what is inside the container. Although the <em>variable</em> should not (or in Java cannot) be assigned a new value, its methods can be called and its fields and properties <em>can</em> be modified freely.</p>
-
-
     <h3>Capture by Copy (C++)</h3>
 
     <p>Capture by copy means the lambda function gets a copy of the value in the capture variable at the time the lambda expression is <em>defined</em>. It cannot modify the outer variable and does not see changes to the outer variable.</p>
@@ -1554,6 +1601,53 @@
 
     <p>(In C#, Java, Javascript, and Python capture is always by reference (or by value in Java), so this section on capture by copy does not apply to those languages.)</p>
 
+
+    <h3>Caveats and Capture by Value</h3>
+
+    <p>It can become <em>very</em> difficult to track what captured variables will hold inside lambda expressions when the variable&rsquo;s value changes, like in some of the examples in the previous section! It is especially hard in some specific cases:</p>
+
+    <ul>
+      <li>When the variable&rsquo;s value changes between the lambda expression&rsquo;s definition and its invocation.</li>
+      <li>Capturing <code>for</code>-loop variables and variables within loops because their value may change on every iteration &mdash; in fact, they may be considered <em>different variables</em> on each iteration, which may or may not be what you expect.</li>
+      <li>When lambda functions are executed asynchronously, as is often the case in Javascript, because the order of execution is opposite to the source code order and may be unpredictable.</li>
+    </ul>
+
+    <p><strong>Avoid using capture by reference in these circumstances whenever possible.</strong> especially capturing <code>for</code>-loop variables and variables within loops.</p>
+
+    <p>Modifying the captured variable either inside or outside the lambda expression is not possible in Java, which requires that captured variables be <code>final</code> or assigned once, so that it only ever has one value. That&rsquo;s nice! It prevents complex situations that are prone to error. Since the captured variable cannot be changed, capture by reference is probably not the right term: capture by value might be a more appropriate term.</p>
+
+    <p>To get around these issues in all of the languages, you can sometimes make the captured variable a container (e.g. a list) and modify what is inside the container. Although the <em>variable</em> should not (or in Java cannot) be assigned a new value, its methods can be called and its fields and properties <em>can</em> be modified freely.</p>
+
+    <hr>
+
+    <p>In addition to the captured variable&rsquo;s value, it is can also be very hard to track its <em>lifetime</em>. Objects stored in captured variables may remain in memory so long as the <em>lambda function</em> remains stored in a variable. The lifetime of captured variables is dependent on the lifetime of the lambda function. If the lambda function is stored in a global variable, for example, any objects in variables captured by the lambda expression may hold onto system resources indefinitely.</p>
+
+    <p>Or, worse, those captured objects may become invalid in some way (due to their own semantics), leading to a crash or error the next time the lambda function is called. Lambda functions must be careful that nothing intervenes between definition and execution that would violate expectations the function has about the captured variables.</p>
+
+    <!--
+    <h3>Capturing loop variables</h3>
+
+callbacks = [];
+for (var i = 0; i < 5; i++)
+  callbacks.push(() => { console.log(i); });    
+callbacks.forEach(cb => cb());
+// print 5, 5, 5, 5, 5
+
+let j;
+callbacks = [];
+for (let i = 0; i < 5; i++) {
+  j = i;
+  callbacks.push(() => { console.log(j); });
+}
+callbacks.forEach(cb => cb());
+// prints 4, 4, 4, 4, 4
+
+callbacks = [];
+for (let i = 0; i < 5; i++)
+  callbacks.push(() => { console.log(i); });    
+callbacks.forEach(cb => cb());
+// prints 0, 1, 2, 3, 4
+    -->
 
     <h2>The Type of Lambda Expressions</h2>
 
@@ -1620,7 +1714,24 @@
 
     <h3>Javascript</h3>
 
-    <p>As noted earlier, the capture rules apply to local function definitions the same as they do with lambda expressions.</p>
+    <p>Javascript has a longer, older quasi-alternative syntax to lambda expressions (called function expressions or anonymous functions) that looks like this:</p>
+
+    <figure>
+    <figcaption>
+      Javascript function expression
+    </figcaption>
+    <pre><code class="js">
+    function(x, y) {
+      if (x > y)
+        return x;
+      return y;    
+    }
+    </code></pre>
+    </figure>
+
+    <p>They are almost equivalent. If you don&rsquo;t use <code>this</code>, <code>arguments</code>, <code>yield</code>, and a few other rarely used keywords, the two syntaxes are pretty much the same.</p>
+
+    <p>As noted previously, the capture rules apply to function expressions the same as they do with lambda expressions.</p>
 
     <h3>Python</h3>
 
