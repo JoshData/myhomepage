@@ -92,6 +92,9 @@
             var yZero = $("#canvas").height() / 3;
             var ctx = document.getElementById('canvas').getContext("2d");
 
+            // Icebergs in play.
+            var icebergs = [];
+
             // Draw backgound.
             function draw_background() {
                 // Sky
@@ -137,10 +140,7 @@
             draw_water();
 
             // Hook up draw events.
-            var mousePressed = false;
-            var polygon = null;
-            var polygonProperties = null;
-            var velocity = [];
+            var drawingInProgress = null;
             function add_point(e) {
                 if (e.touches)
                     e = e.touches[0];
@@ -148,14 +148,15 @@
                 var rect = $("#canvas")[0].getBoundingClientRect();
                 var x = e.clientX - rect.left;
                 var y = e.clientY - rect.top;
-                polygon.push([x, y]);
+                drawingInProgress.push([x, y]);
 
                 // Draw lasso.
-                if (polygon.length >= 2) {
+                if (drawingInProgress.length >= 2) {
                     ctx.beginPath();
                     ctx.strokeStyle = "black";
                     ctx.lineWidth = 3;
                     ctx.lineJoin = "round";
+                    let polygon = drawingInProgress;
                     ctx.moveTo(polygon[polygon.length-2][0], polygon[polygon.length-2][1]);
                     ctx.lineTo(polygon[polygon.length-1][0], polygon[polygon.length-1][1]);
                     ctx.closePath();
@@ -168,28 +169,35 @@
                 draw_background();
                 draw_water();
 
-                mousePressed = true;
-                polygon = [];
+                drawingInProgress = [];
                 add_point(e);
             });
             $('#canvas').on('mousemove touchmove', function (e) {
-                if (mousePressed) {
+                if (drawingInProgress !== null) {
                     add_point(e);
                     e.preventDefault(); // prevent scrolling on iOS 12
                 }
             });
             $('#canvas').on('mouseup touchend', function (e) {
                 // Finish drawing - reset the polygon and inertia.
-                mousePressed = false;
-                if (polygon.length < 3) {
-                    polygon = null;
+                if (drawingInProgress.length < 3) {
+                    drawingInProgress = null;
                     return;
                 }
-                if (polygon.length > 0) // make first and last point the same
-                    polygon.push(polygon[0]);
+
+                addIceberg(drawingInProgress);
+                drawingInProgress = null;
+            });
+
+            function addIceberg(polygon) {
+                polygon = polygon.concat([polygon[0]]); // make first and last point the same
+
+                let iceberg = {
+                    polygon: polygon
+                };
 
                 // Reset the velocity vector.
-                velocity = [0, 0, 0];
+                iceberg.velocity = [0, 0, 0];
 
                 // People like to draw shapes with kinks, which results
                 // in part of the polygon being treated as negative area.
@@ -206,17 +214,17 @@
                     // Remove duplicate vertices which breaks unkinkPolygon.
                     var found_vertices = { };
                     var polygon2 = [];
-                    polygon.forEach(function(pt) {
+                    iceberg.polygon.forEach(function(pt) {
                         var k = pt[0] + "|" + pt[1];
                         if (k in found_vertices) return;
                         found_vertices[k] = true;
                         polygon2.push(pt);
                     })
-                    polygon = polygon2;
-                    polygon.push(polygon[0]);
+                    iceberg.polygon = polygon2;
+                    iceberg.polygon.push(iceberg.polygon[0]);
 
                     // Split polygon into parts separated at kinks.
-                    var k = turf.polygon([polygon]);
+                    var k = turf.polygon([iceberg.polygon]);
                     k = turf.unkinkPolygon(k);
                     if (k.features.length > 1) {
                         // Take the part with the largest area.
@@ -229,39 +237,167 @@
                                 maxAreaIndex = i;
                             }
                         });
-                        polygon = k[maxAreaIndex];
+                        iceberg.polygon = k[maxAreaIndex];
                     }
                 } catch (e) {
                 }
 
                 // Make the polygon defined in a consistent clockwise/counter-clockwise
                 // order to simplify the computation of the fun drag effect.
-                polygonProperties = {
-                  area: signedPolygonArea(polygon),
-                };
-                if (polygonProperties.area < 0) {
-                    polygon = polygon.reverse();
-                    polygonProperties.area = Math.abs(polygonProperties.area);
+                iceberg.area = signedPolygonArea(iceberg.polygon);
+                if (iceberg.area < 0) {
+                    iceberg.polygon = iceberg.polygon.reverse();
+                    iceberg.area = Math.abs(iceberg.area);
                 }
 
                 // Calculate the polygon's angular mass, normalized to
                 // the polygon area because it plays nicer when the
                 // math is size-independent.
-                polygonProperties.rotationalInertia = polygonMomentOfInertia(polygon) / polygonProperties.area**.5 / 1000000;
-            });
+                iceberg.rotationalInertia = polygonMomentOfInertia(iceberg.polygon) / iceberg.area**.5 / 1000000;
 
+                // The distribution of mass across the 2D polygon is
+                // non-uniform if we're thinking about it as a projection
+                // of a realistic 3D shape. The mass density is actually
+                // zero at the edge of the polygon and increases as you
+                // go away from the edge toward the center. The ultimate
+                // way to model this would be to impute a 3D volume from
+                // the polygon and then perform the geometric operations
+                // (compute the centroid, clip to the water line) on the
+                // volume. But without a straightforward way to impute a
+                // 3D volume, we can instead a) devise an approximate mass
+                // density function over the plane and b) lump the polygon
+                // mass at some number of points within the polygon.
+                //
+                // The lump points will be uniformly distributed over the
+                // polygon.
 
-            var tick_repeat = function() {
-                tick();
-                setTimeout(tick_repeat, 50);
+                // Triangulate the polygon, yielding awkwardly shaped triangles.
+                // Compute the area of each triangle, divide by the total area,
+                // and store this as triangle & area objects.
+                var triangles = turf.tesselate(turf.polygon([iceberg.polygon]))
+                  .features.map(function(f) { return f.geometry.coordinates[0]; });
+                triangles = triangles.map(function(t) { return { triangle: t, area: polygonArea(t) / iceberg.area } });
+
+                // Create some uniformly distributed points within the polygon.
+                iceberg.lumpedMassPoints = [];
+                for (let i = 0; i < 250; i++) {
+                    // Choose a triangle at random, weighted by each triangle's area,
+                    // and a coordinate within the triangle.
+                    let tR = Math.random(), tX = Math.random(), tY = Math.random();
+                    for (var ti = 0; ti < triangles.length; ti++) {
+                        tR -= triangles[ti].area;
+                        if (tR <= 0 || ti == triangles.length - 1) break;
+                    }
+
+                    // Get a point randomly within the bounds of the triangle.
+                    // (https://stackoverflow.com/q/4778147)
+                    let t = triangles[ti].triangle;
+                    function triangle_interpolate(r1, r2, a, b, c) {
+                        return (1 - Math.sqrt(r1)) * a + (Math.sqrt(r1) * (1 - r2)) * b + (Math.sqrt(r1) * r2) * c;
+                    }
+                    iceberg.lumpedMassPoints.push({
+                        point: [triangle_interpolate(tX, tY, t[0][0], t[1][0], t[2][0]),
+                                triangle_interpolate(tX, tY, t[0][1], t[1][1], t[2][1]) ]
+                    })
+                }
+
+                // Distribute mass to each point by weighting each point
+                // by its distance to the nearest edge of the polygon.
+                var pMassTotal = 0;
+                iceberg.lumpedMassPoints.forEach(function(p) {
+                    for (let i = 0; i < iceberg.polygon.length - 1; i++) {
+                        let d = pointSegmentDistance(p.point, iceberg.polygon[i], iceberg.polygon[i+1]);
+                        if (!p.mass || d < p.mass)
+                            p.mass = d;
+                    }
+                    pMassTotal += p.mass;
+                })
+                iceberg.lumpedMassPoints.forEach(function(p) {
+                    p.mass /= pMassTotal;
+                });
+
+                // Compute the height of the iceberg.
+                var yMin = null, yMax = null;
+                iceberg.polygon.forEach(function(pt, i) {
+                    if (i == 0 || pt[1] < yMin) yMin = pt[1];
+                    if (i == 0 || pt[1] > yMax) yMax = pt[1];
+                });
+                iceberg.height = yMax - yMin;
+
+                icebergs = [ iceberg ];
+
+                /*
+                // For testing, create a duplicate iceberg to the right.
+                var iceberg2 = JSON.parse(JSON.stringify(iceberg));
+                iceberg2.polygon.forEach(p => { p[0] += ctx.canvas.width/3 });
+                iceberg2.lumpedMassPoints.forEach(p => { p.point[0] += ctx.canvas.width/3 });
+                icebergs.push(iceberg2);
+                iceberg.lumpedMassPoints = [];
+                */
             }
-            tick_repeat();
+
+            // frames of the animation
+
+            var stop_error = false;
+            setInterval(tick_with_error_handler, 50);
+
+            function tick_with_error_handler() {
+                if (stop_error) return;
+                try {
+                    tick();
+                } catch (e) {
+                    console.log("ending tick timer", e);
+                    clearInterval(tick_with_error_handler);
+                    stop_error = true;
+                }
+            }
 
             function tick() {
-                if (!polygon || polygon.length < 4 || mousePressed
-                   || !polygonProperties)
+                if (drawingInProgress !== null || icebergs.length == 0)
                     return;
 
+                // Reset canvas.
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                draw_background();
+
+                // Update and draw each iceberg.
+                icebergs.forEach(function(iceberg) {
+                    // Update cooordinates.
+                    iceberger(iceberg);
+
+                    // Draw polygon as a filled iceberg.
+                    // TODO: Draw ice texture?
+                    ctx.strokeStyle = "black";
+                    ctx.fillStyle = "white";
+                    ctx.lineWidth = 2;
+                    ctx.lineJoin = "round";
+                    ctx.beginPath();
+                    ctx.moveTo(iceberg.polygon[0][0], iceberg.polygon[0][1]);
+                    iceberg.polygon.forEach(function(pt) {
+                        ctx.lineTo(pt[0], pt[1]);
+                    });
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+
+                    /*
+                    iceberg.lumpedMassPoints.forEach(function(pt) {
+                        ctx.beginPath();
+                        ctx.arc(pt.point[0], pt.point[1],
+                                pt.mass*500,
+                                0, 2 * Math.PI);
+                        ctx.stroke();
+                    });
+                    */
+                })
+
+                // water overlay over the submerged part
+                ctx.globalAlpha = .5;
+                draw_water();
+                ctx.globalAlpha = 1;
+            }
+
+            function iceberger(iceberg) {
                 // Compute the force on centroid of the iceberg polygon
                 // at this time instant. The polygon has three degrees
                 // of freedom: x, y, and rotation.
@@ -269,8 +405,8 @@
 
                 // Compute the center of mass of the iceberg and the
                 // center of mass of the submerged portion.
-                var pc = centroid(polygon);
-                var polygon_submerged = turf.bboxClip(turf.polygon([polygon]),
+                var pc = centroid(iceberg.polygon);
+                var polygon_submerged = turf.bboxClip(turf.polygon([iceberg.polygon]),
                     [-Infinity, yZero, Infinity, Infinity]).geometry.coordinates[0];
                 var pc_submerged = (polygon_submerged && polygon_submerged.length >= 4) ? centroid(polygon_submerged) : [0, 0];
 
@@ -280,32 +416,62 @@
                 // center of mass of the full iceberg and bouyancy
                 // pushes up (-y) at the center of mass of the submerged
                 // portion.
-                var specific_gravity = .85;
-                var fg = 1;
-                var submerged_ratio = polygonArea(polygon_submerged) / polygonProperties.area;
-                var fb = submerged_ratio / specific_gravity;
-                force[1] += fg - fb;
+                var submerged_ratio = polygonArea(polygon_submerged) / iceberg.area;
+                var specific_gravity = .92;
+                var time_scale = 1.1;
 
-                // In reality, the 3D distribution of mass is not uniform
-                // across the 2D projection of the iceberg that we are looking
-                // at. While we can assume that it's close, when we chop off
-                // the top of the iceberg to find the submerged portion,
-                // the centroid of the submerged portion is likely to be closer
-                // to the total centroid than the centroid of the projection of
-                // the submerged part because what we chop off is always close
-                // to an edge and the edges have lower density than in the middle.
-                // Adjust the centroid location of the submerged part accordingly.
-                // When half-way submerged, move the centroid 20% closer to the
-                // full cenroid.
-                var r = (submerged_ratio < .5 ? submerged_ratio : (1 - submerged_ratio)) * 2 * .2;
-                pc_submerged[0] = pc_submerged[0]*(1-r) + pc[0]*r;
-                pc_submerged[1] = pc_submerged[1]*(1-r) + pc[1]*r;
+                if (iceberg.lumpedMassPoints.length == 0) {
+                    // In 2D, because more mass will fall at the edges,
+                    // a slightly lower specific gravity produces a
+                    // more realistic looking 90%-below-water result.
+                    // But then slow down the simulation so that it
+                    // doesn't get pushed out of the water so quickly.
+                    specific_gravity -= .07;
+                    time_scale = .9;
 
-                // Apply a moment at the centroid of the iceberg due to
-                // the eccentricity between the iceberg centroid and the
-                // centroid of the submerged portion where the bouyant
-                // force acts.
-                force[2] += fb * (pc_submerged[0] - pc[0]);
+                    // Apply gravity. Everything will be normalized to the
+                    // area of the iceberg, so gravity will have a force of
+                    // 1 in the vertical direction.
+                    force[1] += 1;
+
+                    // The simple computation for boyancy is a force at
+                    // the center of mass of the submerged portion.
+                    var fb = submerged_ratio / specific_gravity;
+                    force[1] -= fb;
+
+                    // Apply a moment at the centroid of the iceberg due to
+                    // the eccentricity between the iceberg centroid and the
+                    // centroid of the submerged portion where the bouyant
+                    // force acts.
+                    force[2] += fb * (pc_submerged[0] - pc[0]);
+
+                } else {
+                    // The more complex computation of bouyancy uses the
+                    // lumped mass points that are submerged rather than
+                    // the center of mass of the submerged portion.
+                    iceberg.lumpedMassPoints.forEach(function(pt) {
+                        var f = 0;
+
+                        // Apply gravity for this point.
+                        f += pt.mass;
+
+                        // Apply bouyant force if submerged. To avoid
+                        // discrete computations at our arbitrary
+                        // lumped points, treat 'submerged' as non-binary
+                        // near the water level.
+                        let s = (pt.point[1] - yZero) / (iceberg.height/20);
+                        s = Math.min(Math.max(s, 0), 1);
+                        f -= pt.mass / specific_gravity * s;
+
+                        force[1] += f;
+
+                        // Apply a moment at the centroid of the iceberg due to
+                        // the eccentricity between the iceberg centroid and the
+                        // centroid of the submerged portion where the bouyant
+                        // force acts.
+                        force[2] -= f * (pt.point[0] - pc[0]);
+                    });
+                }
 
                 // Apply some drag. This may not be totally scientifically valid.
                 // For each line segment on the perimeter of the polygon that is
@@ -317,16 +483,16 @@
                 // perpendicular to the segment. Transform the force to the centroid
                 // of the polygon.
                 var perimeter = 0;
-                polygon.forEach(function(p1, i) {
+                iceberg.polygon.forEach(function(p1, i) {
                     if (i == 0) return;
-                    var p0 = polygon[i-1];
+                    var p0 = iceberg.polygon[i-1];
                     var v = [p1[0]-p0[0], p1[1]-p0[1]];
                     var d = (v[0]**2 + v[1]**2)**.5;
                     perimeter += d;
                 });
-                polygon.forEach(function(p1, i) {
+                iceberg.polygon.forEach(function(p1, i) {
                     if (i == 0) return;
-                    var p0 = polygon[i-1];
+                    var p0 = iceberg.polygon[i-1];
 
                     // Get the perpendicular facing *outward* 
                     // (away from the polygon).
@@ -345,7 +511,7 @@
                     // Skip if the force is negative which means the
                     // line segment is not on the front side of the polygon
                     // w.r.t. the direction of motion.
-                    var f = v[0]*velocity[0] + v[1]*velocity[1];
+                    var f = v[0]*iceberg.velocity[0] + v[1]*iceberg.velocity[1];
                     if (f < 0) return;
 
                     // Scale the force. There's more drag under water.
@@ -371,7 +537,7 @@
 
                 // If the polygon is out of the horizontal bounds, push it in.
                 var minx = Infinity, maxx = -Infinity;
-                polygon.forEach(function(pt) {
+                iceberg.polygon.forEach(function(pt) {
                     if (pt[0] < minx) minx = pt[0];
                     if (pt[0] > maxx) maxx = pt[0];
                 });
@@ -380,63 +546,55 @@
 
                 // The translational force is normalized to the polygon area so we can
                 // consider it an acceleration. Increment the velocity with the acceleration.
-                velocity[0] += force[0];
-                velocity[1] += force[1];
+                iceberg.velocity[0] += force[0] * time_scale;
+                iceberg.velocity[1] += force[1] * time_scale;
 
                 // But the rotational force must be divided by the polygon's angular mass.
-                velocity[2] += force[2] / polygonProperties.rotationalInertia;
+                iceberg.velocity[2] += force[2] / iceberg.rotationalInertia * time_scale;
 
                 // Apply damping. There is more damping in water than in air.
                 // Lowering the damping in air boosts the free-fall a bit for
                 // a nice effect when it hits the water.
                 var damping_air = .99;
-                var damping_water = .94;
+                var damping_water = .96;
                 var damping = damping_air*(1-submerged_ratio) + damping_water*submerged_ratio;
-                velocity[0] *= damping;
-                velocity[1] *= damping;
-                velocity[2] *= (damping-.1);
+                iceberg.velocity[0] *= damping;
+                iceberg.velocity[1] *= damping;
+                iceberg.velocity[2] *= (damping-.1);
 
                 // Apply velocity to the coordinates.
-                polygon = polygon.map(function(pt) {
-                    pt = rotate(pc[0], pc[1], pt[0], pt[1], velocity[2]);
-                    pt[0] += velocity[0];
-                    pt[1] += velocity[1];
+                function update_polygon_point(pt) {
+                    pt = rotate(pc[0], pc[1], pt[0], pt[1], iceberg.velocity[2]);
+                    pt[0] += iceberg.velocity[0];
+                    pt[1] += iceberg.velocity[1];
                     return pt;
-                });
+                }                
+                iceberg.polygon = iceberg.polygon.map(update_polygon_point);
+                iceberg.lumpedMassPoints.forEach(function(pt) {
+                    pt.point = update_polygon_point(pt.point);
+                })
 
                 // Melt the iceberg slowly. Melt faster above water.
-                polygon.forEach(function(pt) {
+                iceberg.polygon.forEach(function(pt) {
                     if (pt[1] < yZero)
                         pt[1] = (pt[1] - yZero)*.9999 + yZero;
                     else
                         pt[1] = (pt[1] - yZero)*.99999 + yZero;
                 });
-
-                // Reset canvas.
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-                // Draw polygon as a filled iceberg.
-                // TODO: Draw ice texture?
-                draw_background();
-                ctx.strokeStyle = "black";
-                ctx.fillStyle = "white";
-                ctx.lineWidth = 2;
-                ctx.lineJoin = "round";
-                ctx.beginPath();
-                ctx.moveTo(polygon[0][0], polygon[0][1]);
-                polygon.forEach(function(pt) {
-                    ctx.lineTo(pt[0], pt[1]);
-                });
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                // water overlay over the submerged part
-                ctx.globalAlpha = .5;
-                draw_water();
-                ctx.globalAlpha = 1;
             }           
         })
+
+        // https://stackoverflow.com/a/1501725
+        function pointSegmentDistance(p, v, w) {
+          function sqr(x) { return x * x }
+          function dist2(v, w) { return sqr(v[0] - w[0]) + sqr(v[1] - w[1]) }
+          var l2 = dist2(v, w);
+          if (l2 == 0) return Math.sqrt(dist2(p, v));
+          var t = ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
+          t = Math.max(0, Math.min(1, t));
+          return Math.sqrt(dist2(p, [v[0] + t * (w[0] - v[0]),
+                                     v[1] + t * (w[1] - v[1]) ]));
+        }
 
         function centroid(pts) {
             // https://stackoverflow.com/a/33852627
@@ -460,7 +618,7 @@
         }
 
         function signedPolygonArea(vertices) {
-            if (!vertices || vertices.length < 4) return 0;
+            if (!vertices || vertices.length < 3) return 0;
             // https://stackoverflow.com/a/33670691
             var total = 0;
             for (var i = 0, l = vertices.length; i < l; i++) {
