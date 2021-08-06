@@ -70,6 +70,8 @@
     <blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr">Today I channeled my energy into this very unofficial but passionate petition for scientists to start drawing icebergs in their stable orientations. I went to the trouble of painting a stable iceberg with my watercolors, so plz hear me out.<br><br>(1/4) <a href="https://t.co/rtkCYub38b">pic.twitter.com/rtkCYub38b</a></p>&mdash; Megan Thompson-Munson (@GlacialMeg) <a href="https://twitter.com/GlacialMeg/status/1362557149147058178?ref_src=twsrc%5Etfw">February 19, 2021</a></blockquote>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+    <script async src="ext/imagetracer_v1.2.6.js"></script>
+    <canvas id="paste_buffer" style="display: none"></canvas>
 
     </div>
 
@@ -334,6 +336,51 @@
                 icebergs.push(iceberg2);
                 iceberg.lumpedMassPoints = [];
                 */
+            }
+
+            // Paste an image of an iceberg anywhere in the document window.
+            // Use the Browser's Edit -> Paste command.
+            document.onpaste = function (event) {
+              // https://stackoverflow.com/a/15369753 and https://stackoverflow.com/a/18387322
+              var items = (event.clipboardData  || event.originalEvent.clipboardData).items;
+              var blob = null;
+              for (var i = 0; i < items.length; i++)
+                if (items[i].type.indexOf("image") === 0)
+                  blob = items[i].getAsFile();
+              if (blob === null) return;
+              var reader = new FileReader();
+              reader.onload = function(event) {
+                var image = new Image();
+                image.onload = function () {
+                  var canvas = $('#paste_buffer')[0];
+                  canvas.width = image.width;
+                  canvas.height = image.height;
+                  let ctx = canvas.getContext("2d");
+                  ctx.drawImage(image, 0, 0);
+                  addIcebergFromImageData(ctx.getImageData(0, 0, image.width, image.height));
+                };
+                image.src = event.target.result; // data URL
+              };
+              reader.readAsDataURL(blob);
+            }
+
+            function addIcebergFromImageData(image) {
+                // Use ImageTracer to find the most complex polygon
+                // in the image, and add that polygon to the canvas.
+                let polygon = null;
+                ImageTracer.imagedataToTracedata(image)
+                    .layers.forEach((layer) => {
+                        layer.forEach((object) => {
+                            if (polygon === null || object.segments.length > polygon.length) {
+                                polygon = object.segments.map((seg) => {
+                                    return [seg.x1, seg.y1]
+                                });
+                            }
+                        });
+                    });
+                if (polygon !== null)
+                    addIceberg(polygon);
+                return;
             }
 
             // frames of the animation
