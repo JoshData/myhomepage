@@ -190,7 +190,7 @@
     </code></pre>
     </figure>
 
-    <p>C#, Java, and Javascript use an arrow symbol (made up of an equal sign or dash plus a greater than sign) to separate the arguments from the expression body. The C# and Javascript syntaxes happen to be identical in this case. (In Javascript, an &ldquo;anonymous function&rdquo; refers to a different but related syntactic structure &mdash; the technical name for the structure discussed here is the arrow function expression.)</p>
+    <p>C#, Java, and Javascript use an arrow symbol (made up of an equal sign or dash plus a greater than sign) to separate the arguments from the expression body. The C# and Javascript syntaxes happen to be identical in this case. (In Javascript, an &ldquo;anonymous function&rdquo; refers to a different but related syntactic structure &mdash; the technical name for the Javascript syntax discussed here is the &ldquo;arrow function expression.&rdquo;)</p>
 
     <p>In the academic discipline of philosophy, the function would be written with the Greek lowercase letter lambda λ denoting the start of a lambda expression:</p>
 
@@ -415,7 +415,7 @@
 
     <h3>Quick look at the type of lambda expressions in the statically typed languages</h3>
 
-    <p>In statically typed languages the variable <code>f</code> must be declared with the correct type. In C++, the compiler can guess the type so <code>auto</code> can be used:
+    <p>In statically typed languages each variable has a type. In C++ and C# (starting with C# 10), the compiler can guess the type so <code>auto</code> (in C++) or <code>var</code> (in C#) can be used:
 
     <figure>
     <figcaption>
@@ -430,46 +430,25 @@
     </code></pre>
     </figure>
 
-    <p>You can also use an explicit type. The correct explicit C++ type for this lambda expression is <code>std::function&lt;double(double, double)></code>:</p>
-
     <figure>
     <figcaption>
-      C++ variable assignment with a lambda expression and explicit type
+      C# 10+ variable assignment with a lambda expression
     </figcaption>
     <pre><code class="cpp">
-    #include &lt;functional>
-
-    using namespace std;
-
-    ...
-
-    function&lt;double(double, double)> f = [](double x, double y) {
-      if (x > y)
-        return x;
-      return y;    
-    };
+    var parse = (double x, double y) => (x > y ? x : y);
     </code></pre>
     </figure>
+    <!-- that's the example at https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions#natural-type-for-lambda-expressions -->
 
-    <p>Although C# and Java have the <code>var</code> keyword like C++&rsquo;s <code>auto</code>, it unfortunately cannot be used to guess the type of a lambda expression.</p>
+    <p>You can also make a variable declaration with an explicit type, and in C# &le;9 and Java it&rsquo;s required, even though both have <code>var</code> keywords. The variable types to use in C++, C# and Java are:</p>
 
-    <p>The hard-to-read C# generic type <code>Func&lt;double, double, double></code> is a correct C# type in this example:</p>
+    <ul>
+    	<li>C++: <code>std::function&lt;double(double, double)></code> (with <code>#include &lt;functional></code>)</li>
+    	<li>C#: <code>System.Func&lt;double, double, double></code></li>
+		<li>Java: <code>java.util.function.BinaryOperator&lt;Double></code></li>
+	</ul>
 
-    <figure>
-    <figcaption>
-      C# variable assignment with a lambda expression
-    </figcaption>
-    <pre><code class="cs">
-    Func&lt;double, double, double> f =
-      (x, y) => {
-        if (x > y)
-          return x;
-        return y;    
-      };
-    </code></pre>
-    </figure>
-
-    <p>In Java, a correct type for this example is <code>BinaryOperator&lt;Double></code>:</p>
+	<p>For example, in Java:</p>
 
     <figure>
     <figcaption>
@@ -1651,7 +1630,7 @@ callbacks.forEach(cb => cb());
 
     <h2>The Type of Lambda Expressions</h2>
 
-    <p>If you are writing your own functions that take lambda functions as arguments in statically typed languages, you will need to know the correct types to use.</p>
+    <p>If you are writing your own functions that take lambda functions as arguments in statically typed languages, or if you are using C# &le;9 or Java and want to assign a lambda expression to a variable, you will need to know the correct types to use.</p>
 
     <h3>C++</h3>
 
@@ -1673,9 +1652,9 @@ callbacks.forEach(cb => cb());
 
     <p>These types are used throughout the built-in .NET assemblies.</p>
 
-    <p>Actually any delegate type can be the type of a lambda expression, but there is no practical reason to use any type other than the three above unless the length of the names of these types becomes too cumbersome to type or read in the source code.</p>
+    <p>Actually any delegate type can be the type of a lambda expression, but there is generally no practical reason to use any type other than the three above unless the length of the names of these types becomes too cumbersome to type or read in the source code.</p>
 
-    <p>The <code>var</code> keyword can never be used with lambda expressions. You must always give a full type.</p>
+    <p>The <code>var</code> keyword can only be used with lambda expressions starting in C# 10, and only for some lambda expressions. Otherwise, you must give a full type.</p>
     
     <h3>Java</h3>
 
